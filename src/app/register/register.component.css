@@ -1,0 +1,13 @@
+.register-wrapper{
+	position: relative;
+	text-align: center;
+	margin: 0 auto;
+	margin-top:30vh;
+}
+
+form input{
+	margin-bottom: 10px;
+}
+h5{
+	color: red;
+}

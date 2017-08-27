@@ -1,0 +1,11 @@
+<div class="pulpit-wrapper" id="pulpit-wrapper" [style.background]="bgColor">
+	<div class="pulpit-buttons">
+	 <button class="pulpit-btn animated bounceInDown" (click)="noteInit()">note</button>
+	</div>
+	<div class="col-lg-9">
+		<app-note *ngFor="let note of Notes" [note]="note"></app-note>
+	</div>
+	<div class="col-lg-3 col-xs-12 brd-l">
+
+	</div>
+</div>

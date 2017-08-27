@@ -1,0 +1,16 @@
+
+.start-wrapper{
+	position: absolute;
+	left: 50%;
+	width: 380px;
+	margin-left: -180px;
+	text-align: center;
+	top: 40%;
+	/*transform: translateY(-50%);*/
+}
+/*.start-wrapper.ng-enter {
+	-webkit-animation: fadeInLeft 1s;
+    -moz-animation: fadeInLeft 1s;
+    -ms-animation: fadeInLeft 1s;
+    animation: fadeInLeft 1s;
+}*/

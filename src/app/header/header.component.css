@@ -1,0 +1,29 @@
+.top-bar{
+	height: 40px;
+	box-sizing: border-box;
+	background-color: #09D991;
+	line-height: 40px;
+	/*position: fixed;*/
+	width: 100%;
+	z-index: 15;
+	transition: all 1s ease-in;
+}
+.top-bar .logged{
+	float: right;
+}
+.logout{
+	border:none;
+	float: right;
+	height: 30px;
+	padding: 5px;
+	line-height: 20px;
+	font-size: 15px;
+	margin-top: 5px;
+	margin-left: 10px;
+	transition: all 1s;
+	background-color: #09D991;
+	border-radius: 10px;
+}
+.logout:hover{
+	background-color: #0CF;
+}

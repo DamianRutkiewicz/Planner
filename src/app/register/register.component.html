@@ -1,0 +1,15 @@
+<div class="content">
+<div id="register-wrapper" class="animated rollIn register-wrapper">
+	<h1>Rejestracja</h1>
+	<form>
+		<!-- <input type="text" name="username" placeholder="username"><br> -->
+		<input type="email" name="email" placeholder="email" [(ngModel)]="email" required><br>
+		<input type="password" name="password" placeholder="password" [(ngModel)]="password" required><br>
+		<input type="password" name="repassword" placeholder="repassword" [(ngModel)]="repassword" required><br>
+		<!-- <input type="password" name="repeat-password" placeholder="repeat-password"><br> -->
+		<button type="submit" class="btn btn-primary" (click)="signup()">Zarejestruj się</button>
+	</form>
+	<a (click)="goToLogin($event)">Masz już konto ? Zaloguj się</a>
+	<h5 >{{ message }}</h5>
+</div>
+</div>

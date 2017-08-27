@@ -1,0 +1,54 @@
+
+$color : #333;
+$tmp: 100px;
+$top:40px;
+
+.pulpit-wrapper{
+	height: calc(100vh - 40px);
+	width: 100%;
+	position: relative;
+	transition: all 1s ease-in;
+	/*.note-wrapper{
+		height: 100px;
+		width: 60px;
+		background-color: yellow;
+		position: relative;
+		.bar{
+			height: 20px;
+			width: 100%;
+			background-color: red;
+		}
+		.sticker{
+			height: 50px;
+			width: 100%;
+			background-color: blue;
+		}
+	}*/
+	
+}
+.pulpit-buttons{
+	width: 50px;
+	position: relative;
+	margin: 0 auto;
+	z-index: 30;	
+	/*margin-top: -30px;*/
+}
+.pulpit-btn{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	cursor: pointer;
+	background-color: #7CDB0D;
+	border:none;
+	-webkit-box-shadow: 0px 4px 15px -4px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 4px 15px -4px rgba(0,0,0,0.75);
+	box-shadow: 0px 4px 15px -4px rgba(0,0,0,0.75);
+
+}
+.pulpit-btn:hover{
+	background-color:#6bca0c;
+}
+.brd-l{
+	border-left: 2px solid #B5B5B5;
+	height: calc(100vh - 100px);
+}
