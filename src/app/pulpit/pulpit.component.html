@@ -2,10 +2,40 @@
 	<div class="pulpit-buttons">
 	 <button class="pulpit-btn animated bounceInDown" (click)="noteInit()">note</button>
 	</div>
-	<div class="col-lg-9">
+	<div class="col-lg-9 notes-wrapper">
 		<app-note *ngFor="let note of Notes" [note]="note"></app-note>
 	</div>
 	<div class="col-lg-3 col-xs-12 brd-l">
-
+		<h1 id="city"></h1>
+		<div class="weather">			
+			
+			<div class="prop">
+				<p class="day">Dzisiaj</p>
+				<p id="ico"></p>
+				<p>temperatura<span id="temp"></span></p>
+				<p>wiatr<span id="wind"></span></p>
+				<p>ciśnienie<span id="pressure"></span></p>
+			</div>
+		</div>
+		<!-- <div class="weather">
+			<div class="prop">
+			<p class="day">Jutro</p>
+				<p id="ico1"></p>
+				<p>temperatura<span id="temp1"></span></p>
+				<p>wiatr<span id="wind1"></span></p>
+				<p>ciśnienie<span id="pressure1"></span></p>
+			</div>
+		</div> -->
+		<div class="calendar-wrapper">
+			<div id="calendar">
+			    <div id="calendar_header">
+			    	<i class="fa fa-chevron-left"></i>  
+				    <h1></h1>
+				    <i class="fa fa-chevron-right"></i>
+			    </div>
+			    <div id="calendar_weekdays"></div>
+			    <div id="calendar_content"></div>
+			  </div>
+		</div>
 	</div>
 </div>
