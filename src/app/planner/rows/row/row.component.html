@@ -1,0 +1,11 @@
+<tr class="one-row" id="tm{{ index }}">
+	<td class="task-name">
+		<input type="text" name="task-name-input" value="{{ row.name }}">
+		
+	</td>
+	<td app-column *ngFor="let i of liczbaKolumn;let a=index" [a]="a" [index]="index">
+		
+	</td>
+
+</tr>
+

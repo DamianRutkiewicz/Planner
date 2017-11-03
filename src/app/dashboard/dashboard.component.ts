@@ -20,10 +20,10 @@ export class DashboardComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, db:AngularFireDatabase) { 
     // this.item = db.object('/users/'+localStorage.getItem("uid"),{ preserveSnapshot:true});
 
-    console.log("dashboard: ",this.authService.color);
-    console.log("dashboard storage:",localStorage.getItem('uid'));
+    // console.log("dashboard: ",this.authService.color);
+    // console.log("dashboard storage:",localStorage.getItem('uid'));
 
-    console.log("try:",this.item);
+    // console.log("try:",this.item);
     this.ob=db.object('/users/'+localStorage.getItem("uid")).subscribe(snapshot =>{
       this.user = snapshot.name;
       this.navColor=snapshot.navColor;
@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
   	if(this.authService.isUserLogged()!==null){
-  		console.log("zalogowany jako: " , this.authService.isUserLogged());
+  		// console.log("zalogowany jako: " , this.authService.isUserLogged());
   	}
   	else this.router.navigate(['/login']);
   	
@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
   logout() {
     this.authService.logout();
 
-    console.log("poszlo");
+    // console.log("poszlo");
 
   }
 

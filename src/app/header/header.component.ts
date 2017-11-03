@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
   	// console.log(this.authService.getFromDB());
   	// console.log("nav: ",this.authService.getNavColor());
   	// console.log("taki kolor pownien byc : ",this.colorNav);
-    console.log("header",this.navColor);
+    // console.log("header",this.navColor);
   }
 
   logout() {

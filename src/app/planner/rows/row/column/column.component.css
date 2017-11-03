@@ -1,0 +1,26 @@
+
+.one-column tbody{
+	position: relative;
+}
+.one-column tr td{
+	width: 44.44px;
+	border-left: 1px solid #000;
+}
+.left,.right{
+	width: 50%;
+	float: left;
+	color: #fff;
+}
+.right{
+	border-left: 1px solid #bfbaba;
+}
+.in-tr{
+	width: 100%;
+	position: relative;
+}
+.in-tr tbody{
+	position: relative;
+}
+.in-tr tbody tr td{
+	border-left: 1px solid black;
+}

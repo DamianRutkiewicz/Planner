@@ -22,6 +22,13 @@ import { AboutComponent } from './about/about.component';
 import { environment } from '../environments/environment';
 
 import { AuthService } from './connect-db.service';
+import { RowService } from './planner/rows/row.service';
+import { RowComponent } from './planner/rows/row/row.component';
+
+import { ContextMenuModule } from '../../node_modules/ngx-contextmenu';
+import { TimelineComponent } from './planner/rows/timeline/timeline.component';
+import { ColumnTdComponent } from './planner/rows/row/column/column.component';
+import { ChangeColorComponent } from './planner/rows/row/column/change-color/change-color.component';
 
 
 // export const firebase = {
@@ -89,18 +96,23 @@ const appRoutes:Routes=[
     LoginComponent,
     HeaderComponent,
     DashboardComponent,
-    AboutComponent
+    AboutComponent,
+    RowComponent,
+    TimelineComponent,
+    ColumnTdComponent,
+    ChangeColorComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    ContextMenuModule,
     RouterModule.forRoot(appRoutes),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, RowService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

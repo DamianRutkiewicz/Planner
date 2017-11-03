@@ -19,10 +19,29 @@
 	 	</ul>
 	  </div>
 	 </div>
-	 <!-- <div class="col-lg-offset-2"></div> -->
 	</div>
 	<div class="row">
-		
+		<div class="col-lg-4 col-lg-offset-2">
+			<div class="sett-content">
+				Godziny pracy:
+				<div class="work-hours">
+					Start:
+					<select id="work-hours-start" (change)="change()" [(ngModel)]="startHour">
+						<!-- <option>-</option> -->
+						<option *ngFor="let date of DatesStart">{{ date | date:'H'}}</option>
+					</select>
+					Koniec:
+					<select id="work-hours-end" (change)="change()" [(ngModel)]="endHour">
+						<!-- <option>-</option> -->
+						<option *ngFor="let date of DatesEnd">{{ date | date:'H'}}</option>
+
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4 col-lg-offset-2">
+
+		</div>
 	</div>
  </div>
 </div>

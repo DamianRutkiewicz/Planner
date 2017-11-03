@@ -2,9 +2,128 @@
 
 	
 }
-.planner-table{
+/*.planner-table{
 	width: 100%;
 }
 .planner-table th{
 	border: 1px solid #000;
+}*/
+.tb-in{
+	width: auto !important;
+}
+.planner-outer{
+	margin: 50px 15px;
+	overflow: auto;
+}
+.planner-outer table{
+	width: 2000px;
+}
+.planner-outer table tbody tr:first-child{
+	background-color: #80B4E8;
+}
+.planner-outer table tbody tr:nth-child(2){
+	background-color: #CAD6FF;
+}
+/*.planner-outer table{
+	width: 100%;
+}*/
+.planner-outer table tr td{
+	border: 1px solid #000;
+	width: 400px;
+}
+.one-row td{
+	width: 400px;
+}
+table.one-column{
+	width: auto !important;
+}
+table.one-column tbody td{
+	width: 66.6px;
+}
+
+.days-tb td:not(:first-child){
+	text-align: center;
+}
+
+.info-tb{
+	height: 50px;
+}
+.modal-ouer{
+	position: absolute;
+	top: 0;
+	width: 98vw;
+	height: 100vh;
+	z-index: -1;
+}
+.modal-ss{
+	position: absolute;
+	width: 200px;
+	height: 52px;
+	background-color: #000;
+	border: 1px solid #fff;
+	display: none;
+}
+.modal-ss ul{
+	padding-left: 15px;
+}
+.modal-ss ul li{
+	font-size: 15px;
+	line-height: 20px;
+
+}
+.modal-ss ul li a{
+	color: #fff;
+	cursor: pointer;
+}
+/*.tb-in tr td{
+	width: 20%;
+}*/
+
+/*.hours-td{
+	width: 400px;
+}*/
+.row-4{
+	width:100px !important;
+}
+.row-5{
+	width:80px !important;
+}
+.row-6{
+	width:66.66px !important;
+}
+.row-7{
+	width:57.142px !important;
+}
+.row-8{
+	width:50px !important;
+}
+.row-9{
+	width:44.44px !important;
+}
+.row-10{
+	width:40px !important;
+}
+.row-11{
+	width:36.36px !important;
+}
+.row-12{
+	width:33.33px !important;
+}
+.row-13{
+	width:30.769px !important;
+}
+.row-14{
+	width:28.57px !important;
+}
+.row-15{
+	width:26.666px !important;
+}
+.row-16{
+	width:25px !important;
+}
+.row-17{
+	width:23.529px !important;
+}
+.row-18{
+	width:22.22px !important;
 }

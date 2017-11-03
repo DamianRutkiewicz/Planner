@@ -16,14 +16,6 @@ export class PulpitComponent implements OnInit {
   bgColor;
   Notes:Array<noteClass>=[];
 
-  temp;
-  lat="52.23";
-  lon="21.01";
-  api = "http://api.openweathermap.org/data/2.5/weather?lat="+this.lat+"&lon="+this.lon+"&appid=06a64d8a64a5d7158cca6215772051d0";
-  // http://api.openweathermap.org/data/2.5/weather?lat=52.23&lon=21.01&appid=06a64d8a64a5d7158cca6215772051d0
-  // api5 = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=139&cnt=10&appid=06a64d8a64a5d7158cca6215772051d0";
-  // http://api.openweathermap.org/data/2.5/forecast/daily?lat=52.23&lon=21.01&appid=06a64d8a64a5d7158cca6215772051d0
-  // http://api.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=139&cnt=10&appid=2b3e45c9ffdb408b400e534bd0387714
   constructor(private elRef:ElementRef, private authService:AuthService, db:AngularFireDatabase) { 
     this.obObs=db.object('/users/'+localStorage.getItem("uid"));
     this.obObs.subscribe(snapshot =>{
@@ -31,23 +23,54 @@ export class PulpitComponent implements OnInit {
       // this.Notes = snapshot.Notes;
     });
 
-    $.getJSON(this.api,function(data){
-      this.temp=data.main.temp-273.15;
-      $("#city").html(data.name);
-      var txt = this.temp+"<sup>o</sup>C";
-      var wind = data.wind.speed+"m/s ";
-      var icon = "<img src='/assets/images/"+data.weather[0].icon+".png'/>";
-      // $("#ico").html(data.weather[0].icon);
-      var pressure = data.main.pressure+"hpa";
-      $("#ico").html(icon);
-      $("#temp").html(txt);
-      $("#wind").html(wind);
-      $("#pressure").html(pressure);
-    });
+    
      
   }
 
   ngOnInit() {
+  
+    (function(){
+      var x = navigator.geolocation;
+      x.getCurrentPosition(success,failure);
+      
+      
+      
+    })();
+
+    function createCalendar(api){
+      $.getJSON(api,function(data){
+      
+          var temp=data.main.temp-273.15;
+
+          $("#city").html(data.name);
+          var txt = temp+"<sup>o</sup>C";
+          var wind = data.wind.speed+"m/s ";
+          var icon = "<img src='/assets/images/"+data.weather[0].icon+".png'/>";
+          // $("#ico").html(data.weather[0].icon);
+          var pressure = data.main.pressure+"hpa";
+          $("#ico").html(icon);
+          $("#temp").html(txt);
+          $("#wind").html(wind);
+          $("#pressure").html(pressure);
+        });
+    }
+
+    function success(position){
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+        var api = "http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid=06a64d8a64a5d7158cca6215772051d0";
+        
+        createCalendar(api);
+    }
+
+    function failure(){
+        var lat = "52.2297";
+        var lon = "21.07";
+        var api = "http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid=06a64d8a64a5d7158cca6215772051d0";
+        createCalendar(api);
+        console.log("Nie udało się zlokalizować położenia");
+    }
+
     $(function() {
     function c() {
         p();

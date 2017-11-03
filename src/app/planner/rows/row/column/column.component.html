@@ -1,0 +1,13 @@
+<table id="td{{ a }}" class="one-column in-tr in-tr{{ index }}">
+	<tr>
+
+		<td *ngFor="let t of TimelineSteps">
+			<div class="left" (contextmenu)="onRightClick($event)">.</div>
+			<div class="right" (contextmenu)="onRightClick($event)">.</div>
+		</td>
+				
+				<!-- <td>.</td> -->
+	</tr>
+	<ng-template #timeline1></ng-template>
+	<ng-template #changecolor></ng-template>
+</table>

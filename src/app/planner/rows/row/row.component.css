@@ -1,0 +1,32 @@
+.one-row{
+	position: relative;
+}
+.one-row td{
+	width: 400px;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+}
+.one-row td input{
+	width: 100%;
+	border: none;
+}
+/*.in-column tr td{
+	width: 
+}*/
+table.one-column{
+	width: auto !important;
+}
+.task-name input{
+	transition: all 0.3s linear;
+}
+
+.one-column{
+	position: relative;
+}
+.one-column tr{
+	position: relative;
+}
+
+.one-column tr td{
+	color: #fff;
+}
