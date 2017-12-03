@@ -24,11 +24,15 @@ import { environment } from '../environments/environment';
 import { AuthService } from './connect-db.service';
 import { RowService } from './planner/rows/row.service';
 import { RowComponent } from './planner/rows/row/row.component';
+import { AuthGuard } from './auth.guard';
 
 import { ContextMenuModule } from '../../node_modules/ngx-contextmenu';
 import { TimelineComponent } from './planner/rows/timeline/timeline.component';
 import { ColumnTdComponent } from './planner/rows/row/column/column.component';
 import { ChangeColorComponent } from './planner/rows/row/column/change-color/change-color.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { EventComponent } from './planner/rows/event/event.component';
+import { ChangeIconComponent } from './planner/rows/row/column/change-icon/change-icon.component';
 
 
 // export const firebase = {
@@ -52,11 +56,13 @@ const appRoutes:Routes=[
   },
   {
     path:'login',
-    component:LoginComponent
+    component:LoginComponent,
   },
   {
     path:'dashboard',
     component:DashboardComponent,
+    canActivate:[AuthGuard],
+    canActivateChild:[AuthGuard],
     children:[
       {
         path:'',
@@ -65,7 +71,8 @@ const appRoutes:Routes=[
       },
       {
         path:'pulpit',
-        component:PulpitComponent
+        component:PulpitComponent,
+        canActivate:[AuthGuard],
       },
       {
         path:'planner',
@@ -81,6 +88,11 @@ const appRoutes:Routes=[
       }
     ]
   },
+  {
+    path:'404',
+    component:NotFoundComponent 
+  },
+  {path: '**', component:NotFoundComponent},
 ]
 
 @NgModule({
@@ -101,7 +113,11 @@ const appRoutes:Routes=[
     TimelineComponent,
     ColumnTdComponent,
     ChangeColorComponent,
+    NotFoundComponent,
+    EventComponent,
+    ChangeIconComponent,
   ],
+  entryComponents: [EventComponent,TimelineComponent,ChangeIconComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -112,7 +128,7 @@ const appRoutes:Routes=[
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [AuthService, RowService],
+  providers: [AuthService, RowService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

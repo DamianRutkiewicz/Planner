@@ -1,5 +1,7 @@
-import { Component, OnInit, Input , ElementRef} from '@angular/core';
+import { Component, OnInit, Input , ElementRef, EventEmitter} from '@angular/core';
 import { noteClass } from '../noteClass';
+import { SaveFirebaseService } from '../save-firebase.service';
+import { RowService } from '../planner/rows/row.service';
 
 @Component({
   selector: 'app-note',
@@ -9,16 +11,20 @@ import { noteClass } from '../noteClass';
 export class NoteComponent implements OnInit {
 
   @Input() note;
+  str:string;
+  // @Output() removeClicked:EventEmitter<any>=new EventEmitter<any>();
+  // @Output() saveClicked:EventEmitter<any>=new EventEmitter<any>();
   rotate;
-  constructor(private elRef:ElementRef) { 
+
+  noteid:string;
+  constructor(private elRef:ElementRef, private rowservice: RowService) { 
   	this.rotate = this.randRotate();
-  	console.log(this.rotate);
   	this.elRef.nativeElement.style.value;
-  	console.log("element ref: ",this.elRef.nativeElement.style.value)
+
   }
 
   ngOnInit() {
-
+    console.log(this.note.noteText," note text");
   }
 
   randRotate(){
@@ -29,6 +35,20 @@ export class NoteComponent implements OnInit {
     else {
       return (Math.random()*4)+"deg";
     }
+  }
+
+  removeNote(){
+
+    this.rowservice.removeNote(this.note.noteid);
+    // this.noteid = this.note.noteid;
+    // console.log("dla tej notatki jej id: ",this.noteid);
+
+    // console.log("to chce wyslac",this.note.noteid)
+    // this.removeClicked.emit("this.note.noteid");
+  }
+  saveNote(){
+    this.rowservice.saveNote(this.note.noteid,this.note.notetext);
+    // this.saveClicked.emit(true);
   }
 
 }

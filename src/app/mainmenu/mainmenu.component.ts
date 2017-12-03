@@ -12,6 +12,7 @@ export class MainmenuComponent implements OnInit {
   constructor(private http: Http) { }
 
   ngOnInit() {
+  	
   }
 
 }

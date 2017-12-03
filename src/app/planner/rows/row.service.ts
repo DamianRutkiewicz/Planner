@@ -1,4 +1,4 @@
-import { Injectable} from '@angular/core';
+import { Injectable, EventEmitter, Output} from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
@@ -6,14 +6,24 @@ export class RowService {
 
   modalShowed:boolean=false;
   modalSubject = new Subject<any>();
+  modalColorSubject = new Subject<string>();
+  modalIconSubject = new Subject<string>();
+  removeNoteSubject = new Subject<string>();
+  saveNoteSubject = new Subject<string>();
+
+  @Output() childEvent: EventEmitter<string> = new EventEmitter<string>();
 
   private timeLineSteps:number=9;
   private Steps=[];
   private startHour:string='09';
   private endHour:string='18';
   oneTd:number;
+  private leftSteps:number[]=[];
+  EventIdentificators:string[]=[];
+  TimelineIdentificators:string[]=[];
+  colors:string[];
 
-  cliked:number[];
+  clicked:number[];
   index:number;
 
   rows = [{
@@ -88,35 +98,44 @@ export class RowService {
       }
     ]
   },
-  {
-    name:"zadanie 9",
-    time: [
-      {
-        start:17,
-        end:18
-      }
-    ]
-  },
-  {
-    name:"zadanie 10",
-    time: [
-      {
-        start:17,
-        end:18
-      }
-    ]
-  }
+  
   ];
 
   constructor() {
     this.timeLineSteps=9;
     this.oneTd = 400/this.timeLineSteps;
+    let stepsTmp = this.timeLineSteps*2;
+
+    for (var i = 0; i < stepsTmp; i++) {
+      // this.leftSteps.push(this.oneTd*i);
+      // console.log(this.oneTd," to jest oneTd a to i",i);
+      this.leftSteps.push(i*(this.oneTd/2));
+    }
+    // console.log("left steps : ",this.leftSteps);
+    // console.log("tablica odleglosci od lewej strony :",this.leftSteps, " a to stepsTmp", stepsTmp);
   }
 
   ngDoCheck(){
     // for (var i = 0; i < this.timeLineSteps; i++) {
     //   this.Steps.push(1);
     // }
+  }
+
+  removeNote(data){
+    this.removeNoteSubject.next(data)
+  }
+  saveNote(data,id){
+    var tmp = data+" "+id;
+    this.saveNoteSubject.next(tmp);
+  }
+
+  changeModalColor(value,id){
+    let tmp = value+" "+id;
+    this.modalColorSubject.next(tmp);
+  }
+  changeModalIcon(value,id){
+    let tmp = value+" "+id;
+    this.modalIconSubject.next(tmp);
   }
 
   shareModal(mod: boolean){
@@ -152,11 +171,16 @@ export class RowService {
       this.Steps.push(Number(this.startHour)+i);
       // console.log("to jest start hour : ",this.startHour);
     }
+    // console.log("time line steps : ",this.timeLineSteps, " a tu szerokosc komorki: ",this.oneTd, " steps:",this.Steps);
     return this.Steps;
   }
 
   getStartEnd(){
     return [this.startHour,this.endHour];
+  }
+
+  getLeftSteps(){
+    return this.leftSteps;
   }
 
   setStartHour(start:string){

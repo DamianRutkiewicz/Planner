@@ -23,7 +23,7 @@ table.one-column{
 .one-column{
 	position: relative;
 }
-.one-column tr{
+.one-column tbody tr{
 	position: relative;
 }
 

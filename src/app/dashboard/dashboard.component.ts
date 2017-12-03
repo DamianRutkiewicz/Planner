@@ -34,11 +34,15 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-  	if(this.authService.isUserLogged()!==null){
-  		// console.log("zalogowany jako: " , this.authService.isUserLogged());
-  	}
-  	else this.router.navigate(['/login']);
+  	// if(this.authService.isUserLogged()!==null){
+  	// 	// console.log("zalogowany jako: " , this.authService.isUserLogged());
+  	// }
+  	// else this.router.navigate(['/login']);
+
   	
+  }
+  ngOnViewInit(){
+    console.log("czy ktos jest zalogowany ",this.authService.isUserLogged());
   }
 
   logout() {

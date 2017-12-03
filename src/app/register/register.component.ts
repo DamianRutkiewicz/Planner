@@ -14,10 +14,14 @@ export class RegisterComponent implements OnInit {
   password: string;
   repassword:string;
   message:string;
+  errorMessage:string;
 
   constructor(private router: Router, private elementRef: ElementRef, public authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.errorMessage.subscribe((e)=>{
+      this.message = e;
+    })
   }
 
   signup() {

@@ -1,20 +1,33 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot , Router} from '@angular/router';
+import { CanActivate,CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot , Router} from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { AuthService } from './connect-db.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate,CanActivateChild{
 
-  constructor(private router:Router){
+  constructor(private router:Router, private authService: AuthService){
 
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
-    if(localStorage.getItem('currentUser')){
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot){
+    if(this.authService.isUserLogged()){
     	return true;
     }
 
+    // if(localStorage.getItem('currentUser')){
+    // 	return true;
+    // }
+
     this.router.navigate(['/login'],{ queryParams:{ returnUrl: state.url}});
-    return false;
+    return;
+  };
+  canActivateChild(next: ActivatedRouteSnapshot, state: RouterStateSnapshot){
+  	if(this.authService.isUserLogged()){
+    	return true;
+    }
+  	this.router.navigate(['/login'],{ queryParams:{ returnUrl: state.url}});
+  	return false;
   }
+
 }

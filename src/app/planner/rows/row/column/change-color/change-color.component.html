@@ -1,3 +1,6 @@
 <div class="changeColorModal">
-	change color modal
+	<ul>
+		<li *ngFor="let color of colors"><a class="color" [style.background-color]="color" (click)="onChangeColor(color)"></a></li>
+		
+	</ul>
 </div>

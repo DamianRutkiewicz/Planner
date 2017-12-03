@@ -8,7 +8,8 @@
 	-webkit-box-shadow: 6px 7px 23px 0px rgba(0,0,0,0.75);
 	-moz-box-shadow: 6px 7px 23px 0px rgba(0,0,0,0.75);
 	box-shadow: 6px 7px 23px 0px rgba(0,0,0,0.75);
-	margin-bottom: 20px;
+	margin: 20px auto;
+	max-width: 350px;
 }
 .header{
 	
@@ -34,4 +35,33 @@
 	border:none;
 	resize: none;
 	padding: 10px;
+}
+
+.removeNote{
+	width: 30px;
+	height: 30px;
+	/*background-color: red;*/
+	position: absolute;
+	top: 0;
+	right: 0;
+	border-radius: 100%;
+	transition: all 0.5s ease-in-out;
+	border:1px solid grey;
+}
+.removeNote:hover{
+	background-color: #FF5659;
+}
+.saveNote{
+	width: 30px;
+	height: 30px;
+	/*background-color: red;*/
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	border-radius: 100%;
+	transition: all 0.5s ease-in-out;
+	border:1px solid grey;
+}
+.saveNote:hover{
+	background-color: #7AFF6A;
 }

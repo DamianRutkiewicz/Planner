@@ -1,0 +1,9 @@
+<div class="changeIconModal">
+	<ul>
+		<li *ngFor="let icon of icons">
+			<a (click)="onChangeIcon(icon)">
+				<img src="assets/images/event/{{ icon }}">
+			</a>
+		</li>
+	</ul>
+</div>

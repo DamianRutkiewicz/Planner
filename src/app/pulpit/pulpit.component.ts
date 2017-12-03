@@ -3,6 +3,7 @@ import { noteClass } from '../noteClass';
 import { AuthService } from '../connect-db.service';
 import { AngularFireDatabase, FirebaseObjectObservable , FirebaseListObservable} from 'angularfire2/database';
 import * as $ from 'jquery';
+import { RowService } from '../planner/rows/row.service';
 
 @Component({
   selector: 'app-pulpit',
@@ -13,21 +14,103 @@ export class PulpitComponent implements OnInit {
 	
   // @ViewChild('builder') builder:ElementRef;  
   obObs:FirebaseObjectObservable<any>;
+  obObsNotes:FirebaseObjectObservable<any>;
   bgColor;
   Notes:Array<noteClass>=[];
+  maxId=0;
 
-  constructor(private elRef:ElementRef, private authService:AuthService, db:AngularFireDatabase) { 
+  constructor(private rowservice: RowService, private elRef:ElementRef, private authService:AuthService,private db:AngularFireDatabase) { 
+
+
     this.obObs=db.object('/users/'+localStorage.getItem("uid"));
+    this.obObsNotes = db.object('/users/'+localStorage.getItem("uid")+"/Notes/");
     this.obObs.subscribe(snapshot =>{
       this.bgColor=snapshot.bgColor;
       // this.Notes = snapshot.Notes;
     });
-
     
-     
+
+      
+      console.log("first");
+
+      this.obObsNotes.subscribe((value)=>{
+      // console.log("obiekt: ",value.);
+      // this.noteInit(value.notetext,value.noteid);
+        this.Notes = [];
+        for (var key in value) {
+          console.log("wartosc: ",typeof(key));
+          console.log("zobaczymy : ",value[key])
+          if(value[key]!==null){
+            this.noteInit(value[key].notetext,value[key].noteid);
+          }
+          
+      }
+
+      for (var key in value) {
+        console.log(key.substr(4));
+        var tmp= Number(key.substr(4))
+        if(tmp>this.maxId){
+          this.maxId = tmp;
+        }
+      }
+      this.maxId++;
+    })
+    
+
+    // var ggg= {
+    //   noteid:"note7",
+    //   notetext:"taki sobie"
+    // }
+    // this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+"note7").update(ggg);
+    
+  }
+
+  removeNote(data:string):void{
+    console.log("to chce usunac : ",data);
+    // this.Notes = [];
+    this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+data).remove();
+    console.log("tablica Notes: ",this.Notes);
+    console.log("to jest data: ",data);
+    var index = this.Notes.filter(function(el){
+      return el.noteid != data;
+    })
+    this.Notes = index;
+    console.log("Notes: ",this.Notes, " filter: ",index);
+    console.log(this.Notes);
+  }
+  saveNote(data){
+    // console.log("save note, ",data);
+    // let tmp = data.split(/(\s+)/).filter(function(e){return e.trim().length>0;});
+    // let tmp = data.split("|")
+      // if(this.id==tmp[1]){
+      //   this.icon = tmp[0];
+      // }
+
+    var index = data.indexOf(" ");
+    var id = data.substr(0,index);
+    var text = data.substr(index+1);
+    var tmpOb = {
+      noteid:id,
+      notetext:text
+    }
+    // this.Notes=[];
+    console.log("to jest id: ",id," a to jest text:",text);
+    this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+tmpOb.noteid).update(tmpOb);
+    // console.log("tak to wyglada w pulpit component: ",tmp);
   }
 
   ngOnInit() {
+
+    this.rowservice.removeNoteSubject.subscribe((data)=>{
+      this.removeNote(data);
+      // console.log("wykrylem usuniecie : ",data);
+      // this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+data).remove();
+    });
+    this.rowservice.saveNoteSubject.subscribe((data)=>{
+      this.saveNote(data);
+      // console.log("wykrylem usuniecie : ",data);
+      // this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+data).remove();
+    });
   
     (function(){
       var x = navigator.geolocation;
@@ -206,15 +289,37 @@ export class PulpitComponent implements OnInit {
     }
     
 
+  };
+
+  newNote(){
+    console.log("new note");
+    
+    // this.Notes.push(objTmp);
+    // this.maxId++;
+    console.log("notes: ",this.Notes);
+    this.Notes = [];
+    this.updateNotes();
+  }
+  saveToDb(max){
+    console.log("to jest moj max: ",this.maxId);
+    var tmp ={
+      noteid:"note"+max,
+      notetext:""
+    }
+    console.log("to moj obiekt:",tmp)
+
+    this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+tmp.noteid).update(tmp);
   }
 
+  updateNotes(){
+    var objTmp = new noteClass("","note"+this.maxId);
+    this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+objTmp.noteid).update(objTmp);
+  }
 
-
-  noteInit(){
-	// console.log(this.randNumber()[0],this.randNumber()[1]);
+  noteInit(text,id){
     if(this.Notes.length < 12){
-      this.Notes.push(new noteClass());
-      // this.obObs.update({"Notes":new noteClass()});
+      // console.log("text: ",text," id:",id);
+      this.Notes.push(new noteClass(text,id));
       
     }
   	

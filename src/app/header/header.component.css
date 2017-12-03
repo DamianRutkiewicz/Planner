@@ -1,8 +1,8 @@
 .top-bar{
-	height: 40px;
+	height: 60px;
 	box-sizing: border-box;
 	background-color: #09D991;
-	line-height: 40px;
+	line-height: 60px;
 	/*position: fixed;*/
 	width: 100%;
 	z-index: 15;
@@ -18,7 +18,7 @@
 	padding: 5px;
 	line-height: 20px;
 	font-size: 15px;
-	margin-top: 5px;
+	margin-top: 15px;
 	margin-left: 10px;
 	transition: all 1s;
 	background-color: #09D991;

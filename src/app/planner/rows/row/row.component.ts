@@ -17,7 +17,6 @@ import { TimelineComponent } from '../timeline/timeline.component';
 })
 export class RowComponent implements OnInit {
 
-  private TimelineSteps=[];
   private HoursInRow:number[];
   private liczbaKolumn=[];
   test:string="timeline";
@@ -52,6 +51,7 @@ export class RowComponent implements OnInit {
       this.liczbaKolumn.push(i);
 
     }
+
   }
 
   ngOnInit() {
@@ -60,20 +60,6 @@ export class RowComponent implements OnInit {
   ngDoCheck(){
     
   }
-  // private onRightClick(event: MouseEvent){
-  //   console.log("clicked !!!!!!!!!!");
-  //   // this.renderer.setStyle(this.el.nativeElement.querySelector('.model'),'display','block');
-  //   console.log("modul ten zostal klikniety o indeksie: ",this.index);
-  //   this.rowService.cliked = this.index;
-  //   this.showModal(event);
-  //       // console.log("right coord: ",event.clientX, event.clientY," Teraz wartosc z serwisu: ",this.rowService.modalShowed);
-
-  //   return false;
-  //   // this.contextmenu =true;
-  //     // this.contextmenuX=event.clientX
-  //     // this.contextmenuY=event.clientY
-  //     // this.contextmenu=true;
-  // }
   private onClickHideModal(event){
     // console.log("hidden");
     // this.hideModal();
@@ -84,44 +70,8 @@ export class RowComponent implements OnInit {
     // this.renderer.setStyle(this.el.nativeElement.querySelector('.modal-ss'),'display','none');
   }
 
-  // private showModal(event){
-  //   this.rowService.modalSubject.subscribe((data)=>{
-  //     // console.log("Odebralem kurwa dane ja pierdole",data.option,data.posX,data.posY);
-  //     console.log("kurwa mac",this.index, "opcja : ",data.option);
-  //     if(data.option=='timeline'){
-  //       if(this.el.nativeElement.querySelector(".one-row").getAttribute("id")==("tm"+this.rowService.cliked)){
-  //         // console.log("id : ","tm"+this.index)
-  //         console.log("przed create Component");
-  //         this.createComponentt(data.posX,data.posY);
-  //         this.rowService.cliked=null;
-  //         return false;
-  //       }
-        
-  //       // console.log("jestem w ifie timline");
-  //     }else if(data.option=='event'){
-
-  //     }
-  //   })
-  // }  
-
-
-
   private changeColor(color){
   	this.renderer.setStyle(this.el.nativeElement.querySelector('.task-name input'),'background',color);
   }
-
-  // private createComponentt(posx:number,posY:number){
-  //   const comp = this.resolver.resolveComponentFactory(<Type<TimelineComponent>>TimelineComponent);
-
-  //   let cmp= this.timeline.createComponent(comp);
-  //   // this.renderer.setStyle(this.el.nativeElement.querySelector(".timeline"),'left',posx);
-  //   cmp.instance.left = posx;
-  //   console.log("stworzylem nowy komponent");
-  //   // console.log("o tyle z lewej strony : ", posx);
-  // }
-
-  // onUpdate(){
-  //   console.log("To jest wywolana funkcja od rodzica kurwa !!!!");
-  // }
 
 }

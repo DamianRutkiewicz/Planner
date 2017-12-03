@@ -7,6 +7,7 @@ import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { settClass } from './settingsClass';
 import { Http,Response, Headers, RequestOptions } from '@angular/http';
+import { Subject } from 'rxjs/Subject';
 
 
 @Injectable()
@@ -21,6 +22,7 @@ export class AuthService {
   isUserLoggedIn;
   navColor:FirebaseObjectObservable<any>;
   color;
+  errorMessage = new Subject<string>();
   // @Output() colorek = new EventEmitter();
 
   constructor(private firebaseAuth: AngularFireAuth, private router:Router, private af:AngularFireDatabase, private http:Http) {
@@ -50,40 +52,10 @@ export class AuthService {
       })
       .catch(err => {
         console.log('Something went wrong:',err.message);
+        this.returnError(err.message);
         return false;
       });    
   }
-
-  // login(email: string, password: string) {
-  //   this.firebaseAuth
-  //     .auth
-  //     .signInWithEmailAndPassword(email, password)
-  //     .then(value => {
-      	
-  //     	this.userId=value.uid;
-  //       this.items = this.af.object('/users/'+this.userId, {preserveSnapshot: true});
-  //       this.navColor = this.af.object('/users/'+this.userId+"/navColor", {preserveSnapshot: true});
-  //       console.log("dupaaa",this.navColor);
-  //       this.email=value.email;
-  //       // this.items.subscribe(snapshot => {
-  //       //   console.log("hey:",snapshot.key)
-  //       //   console.log("val",snapshot.val());
-  //       // })
-  //       this.navColor.subscribe(snapshot => {
-  //         this.color = snapshot.val();
-  //       })
-
-  //       // console.log("colorek: ",this.color);
-  //       // console.log("taki kolor : ",this.color);
-        
-  //       // console.log("aktualne ",this.items);
-  //       this.router.navigate(['/dashboard']);
-        
-  //     })
-  //     .catch(err => {
-  //       console.log('Something went wrong:',err.message);
-  //     });
-  // }
 
   login(email: string, password: string){
     return this.firebaseAuth
@@ -91,6 +63,7 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then(value => {
        
+        this.isUserLoggedIn = true;
         this.userId=value.uid;
         this.items = this.af.object('/users/'+this.userId, {preserveSnapshot: true});
         this.navColor = this.af.object('/users/'+this.userId+"/navColor", {preserveSnapshot: true});
@@ -104,7 +77,6 @@ export class AuthService {
 
         this.router.navigate(['/dashboard']);
         return this.navColor.toPromise().then(snapshot => {
-          console.log("ostatnia");
           this.color = snapshot.val();
           // this.colorek.emit(this.color);
 
@@ -115,13 +87,53 @@ export class AuthService {
       })
       .catch(err => {
         console.log('Something went wrong:',err.message);
+        // this.router.navigate(['/login']);
+        // this.errorMessage = err.message;
+        this.returnError(err.message);
+        return false;
       });
+
+    // return new Promise((resolve , reject)=>{
+    //   this.firebaseAuth
+    //   .auth
+    //   .signInWithEmailAndPassword(email, password)
+    //   .then(value => {
+       
+    //     this.userId=value.uid;
+    //     this.items = this.af.object('/users/'+this.userId, {preserveSnapshot: true});
+    //     this.navColor = this.af.object('/users/'+this.userId+"/navColor", {preserveSnapshot: true});
+    //     console.log("dupaaa",this.navColor);
+    //     this.email=value.email;
+    //     // this.items.subscribe(snapshot => {
+    //     //   console.log("hey:",snapshot.key)
+    //     //   console.log("val",snapshot.val());
+    //     // })
+    //     localStorage.setItem('uid',this.userId);
+
+    //     this.router.navigate(['/dashboard']);
+    //     return this.navColor.toPromise().then(snapshot => {
+    //       console.log("ostatnia");
+    //       this.color = snapshot.val();
+    //       // this.colorek.emit(this.color);
+
+          
+    //       return this.color;
+    //     })
+       
+    //   })
+    //   .catch(err => {
+    //     console.log('Something went wrong:',err.message);
+    //     // this.router.navigate(['/login']);
+    //     return false;
+    //   });
+    // })
   }
 
   logout() {
     this.firebaseAuth
       .auth
       .signOut();
+    this.isUserLoggedIn = false;
   }
   getUser(){
   	return this.email;
@@ -144,7 +156,14 @@ export class AuthService {
   
 
   /// Authentication     
-  isUserLogged(){
+  getUserLogged(){
   	return this.firebaseAuth.auth.currentUser;
+  }
+  isUserLogged(){
+    return this.isUserLoggedIn;
+  }
+
+  returnError(value){
+    this.errorMessage.next(value);
   }
 }

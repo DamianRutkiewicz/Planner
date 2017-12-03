@@ -171,3 +171,9 @@ i[class^=icon-chevron]{
   width:15%;
   border-radius: 50%;
 }
+
+@media screen and (max-width: 1200px){
+	p.ico{
+		right: 50% !important;
+	}
+}

@@ -22,20 +22,25 @@ export class LoginComponent implements OnInit {
 
   email: string;
   password:string;
+  errorMessage:string;
 
   constructor(private router: Router, private elementRef: ElementRef, public authService: AuthService){
 
   }
 
   ngOnInit() {
-    
+    this.authService.errorMessage.subscribe((e)=>{
+      this.errorMessage = e;
+    })
   }
 
   login() {
-    this.authService.login(this.email, this.password);
-    this.elementRef.nativeElement.querySelector('#login-wrapper').classList.remove('rollIn');
-    this.elementRef.nativeElement.querySelector('#login-wrapper').classList.add('fadeOut');
-    this.email = this.password = '';    
+
+    var loginmessage = this.authService.login(this.email, this.password);
+    // this.elementRef.nativeElement.querySelector('#login-wrapper').classList.remove('rollIn');
+    // this.elementRef.nativeElement.querySelector('#login-wrapper').classList.add('fadeOut');
+    this.email = this.password = ''; 
+    console.log("loginmessage");   
     
     return false;
   }
@@ -49,6 +54,14 @@ export class LoginComponent implements OnInit {
   	},300)
   	
 
+  }
+
+  onFailLogin(){
+    console.log("nie udalo sie kurwa");
+  }
+  onSuccessLogin(){
+    console.log("udalo sie kurwa");
+    this.router.navigate(['/dashboard']);
   }
 
 }

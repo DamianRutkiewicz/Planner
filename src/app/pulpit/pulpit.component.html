@@ -1,6 +1,6 @@
-<div class="pulpit-wrapper" id="pulpit-wrapper" [style.background]="bgColor">
+<div class="pulpit-wrapper container" id="pulpit-wrapper" [style.background]="bgColor">
 	<div class="pulpit-buttons">
-	 <button class="pulpit-btn animated bounceInDown" (click)="noteInit()">note</button>
+	 <button class="pulpit-btn animated bounceInDown" (click)="newNote()">note</button>
 	</div>
 	<div class="col-lg-9 notes-wrapper">
 		<app-note *ngFor="let note of Notes" [note]="note"></app-note>
@@ -11,21 +11,12 @@
 			
 			<div class="prop">
 				<p class="day">Dzisiaj</p>
-				<p id="ico"></p>
+				<p id="ico" class="ico"></p>
 				<p>temperatura<span id="temp"></span></p>
 				<p>wiatr<span id="wind"></span></p>
 				<p>ciśnienie<span id="pressure"></span></p>
 			</div>
 		</div>
-		<!-- <div class="weather">
-			<div class="prop">
-			<p class="day">Jutro</p>
-				<p id="ico1"></p>
-				<p>temperatura<span id="temp1"></span></p>
-				<p>wiatr<span id="wind1"></span></p>
-				<p>ciśnienie<span id="pressure1"></span></p>
-			</div>
-		</div> -->
 		<div class="calendar-wrapper">
 			<div id="calendar">
 			    <div id="calendar_header">

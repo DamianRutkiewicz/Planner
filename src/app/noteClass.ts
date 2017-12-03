@@ -1,16 +1,18 @@
 export class noteClass{
-	noteText:string;
+	notetext:string;
+	noteid:string;
 
-	constructor(){
-		this.noteText="lorem ipsum";
+	constructor(text,id){
+		this.notetext=text;
+		this.noteid= id;
 	}
 
 	getnoteText(){
-		return this.noteText;
+		return this.notetext;
 	}
 
 	setNoteText(value:string){
-		this.noteText=value;
+		this.notetext=value;
 	}
 
 	// getTopStr(){

@@ -1,0 +1,28 @@
+:host{
+	position: absolute;
+	width: 124px;
+	height: 150px;
+	top: 20px;
+	right: -20%;
+	z-index: 1000;
+};
+.changeColorModal{
+	position: absolute;
+	background-color: black;
+	padding: 10px;
+	ul{
+		padding-left: 0;
+		li{
+			padding: 3px;
+			box-sizing: border-box;
+			float: left;
+			a.color{
+				width: 20px;
+				height: 20px;
+				background-color: yellow;
+				cursor: pointer;
+				display: block;
+			}
+		}
+	}
+}
