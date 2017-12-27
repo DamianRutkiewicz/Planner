@@ -34,4 +34,9 @@ export class ChangeIconComponent implements OnInit {
   	this.rowservice.changeModalIcon(value,this.eventId);
   }
 
+  onDelateEvent(){
+    console.log("to jego id : ",this.eventId);
+    this.rowservice.delateEvent(this.eventId);
+  }
+
 }

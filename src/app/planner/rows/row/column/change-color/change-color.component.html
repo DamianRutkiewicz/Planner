@@ -3,4 +3,9 @@
 		<li *ngFor="let color of colors"><a class="color" [style.background-color]="color" (click)="onChangeColor(color)"></a></li>
 		
 	</ul>
+	<div class="wrapper-close-btn">
+		<button class="close-btn" (click)="onDelateTimeline()">
+			<i class="fa fa-times" aria-hidden="true"></i>
+		</button>
+	</div>
 </div>

@@ -12,8 +12,9 @@
 	width: auto !important;
 }
 .planner-outer{
-	margin: 50px 15px;
+	margin: 50px 15px 0 15px;
 	overflow: auto;
+	height: calc(100vh - 115px);
 }
 .planner-outer table{
 	width: 2000px;
@@ -47,6 +48,7 @@ table.one-column tbody td{
 
 .info-tb{
 	height: 50px;
+	font-size: 20px;
 }
 .modal-ouer{
 	position: absolute;

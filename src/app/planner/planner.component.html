@@ -8,10 +8,10 @@
 			</tr>
 			<tr class="days-tb info-tb">
 				<td>Days</td>
-				<td>{{ currentDay | date}}</td>
-				<td>{{ nextDay | date}}</td>
-				<td>{{ next2Day | date}}</td>
-				<td>{{ next3Day | date}}</td>
+				<td>{{ headDays[0] | date}}</td>
+				<td>{{ headDays[1] | date}}</td>
+				<td>{{ headDays[2] | date}}</td>
+				<td>{{ headDays[3] | date}}</td>
 			</tr>
 			<tr>
 				<td colspan="5">
@@ -53,7 +53,9 @@
 					</table>
 				</td>
 			</tr>
-			<tr *ngFor="let row of rows;let i = index"> <!-- ;let i = index -->
+			<!-- kolumny content -->
+			<tr *ngFor="let row of rows;let i = index">
+				
 				<td colspan="5">	<!-- [index]="i" -->
 					<table app-row [row]="row" [index]="i" class="tb-in" (update)="onUpdate($event)" (contextmenu)="onRightClick($event)"></table>
 				</td>

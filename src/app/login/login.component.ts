@@ -1,11 +1,12 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router} from '@angular/router';
 import { ElementRef } from '@angular/core';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable  } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 // import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthService } from '../connect-db.service';
+import { FirebaseService } from '../firebase.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,9 @@ export class LoginComponent implements OnInit {
   password:string;
   errorMessage:string;
 
-  constructor(private router: Router, private elementRef: ElementRef, public authService: AuthService){
+  private tmp:FirebaseObjectObservable<any>;
+
+  constructor(private router: Router, private firebase: FirebaseService, private elementRef: ElementRef, public authService: AuthService){
 
   }
 

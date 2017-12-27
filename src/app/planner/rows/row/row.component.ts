@@ -18,8 +18,11 @@ import { TimelineComponent } from '../timeline/timeline.component';
 export class RowComponent implements OnInit {
 
   private HoursInRow:number[];
-  private liczbaKolumn=[];
-  test:string="timeline";
+  liczbaKolumn=[];
+  testOb ={
+    id:"jakisid",
+    posx:"200px"
+  }
   // oneTD:number;
 
 
@@ -35,7 +38,7 @@ export class RowComponent implements OnInit {
   // } 
 
   @HostListener('mouseenter') onMouseEnter(){
-  	this.changeColor("#C8FFE1");
+  	this.changeColor("#EB5A29");
 
   } 
   @HostListener('mouseleave') onMouseLeave(){
@@ -59,6 +62,11 @@ export class RowComponent implements OnInit {
   }
   ngDoCheck(){
     
+  }
+
+  private focusEvent(){
+    console.log("to jest w inpucie", this.row, " o indexie : ",this.index);
+    this.rowService.changeEventName(this.row,this.index);
   }
   private onClickHideModal(event){
     // console.log("hidden");

@@ -28,8 +28,8 @@ export class DashboardComponent implements OnInit {
       this.user = snapshot.name;
       this.navColor=snapshot.navColor;
       this.bgColor=snapshot.bgColor;
-      console.log("snapshot",snapshot.name);
-      console.log("navColor",this.navColor);
+      // console.log("snapshot",snapshot.name);
+      // console.log("navColor",this.navColor);
     });
   }
 
@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
   	
   }
   ngOnViewInit(){
-    console.log("czy ktos jest zalogowany ",this.authService.isUserLogged());
+    // console.log("czy ktos jest zalogowany ",this.authService.isUserLogged());
   }
 
   logout() {

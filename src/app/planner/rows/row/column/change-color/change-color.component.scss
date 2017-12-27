@@ -25,4 +25,18 @@
 			}
 		}
 	}
+	.wrapper-close-btn{
+		text-align: center;
+		.close-btn{
+			color: #fff;
+			background: none;
+			border: none;
+			font-size: 20px;
+			&:hover{
+				transform:rotate(180deg);
+				transition: all 0.5s ease-out;
+				color: red;
+			};
+		}
+	}
 }

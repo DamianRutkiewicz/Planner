@@ -69,14 +69,10 @@ export class PulpitComponent implements OnInit {
     console.log("to chce usunac : ",data);
     // this.Notes = [];
     this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+data).remove();
-    console.log("tablica Notes: ",this.Notes);
-    console.log("to jest data: ",data);
     var index = this.Notes.filter(function(el){
       return el.noteid != data;
     })
     this.Notes = index;
-    console.log("Notes: ",this.Notes, " filter: ",index);
-    console.log(this.Notes);
   }
   saveNote(data){
     // console.log("save note, ",data);
@@ -111,10 +107,13 @@ export class PulpitComponent implements OnInit {
       // console.log("wykrylem usuniecie : ",data);
       // this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+data).remove();
     });
+
+
+    // console.log(this.firebase.getUser().Notes.note10.noteid+" to przyszlo z serwisu firebase");
   
     (function(){
       var x = navigator.geolocation;
-      x.getCurrentPosition(success,failure);
+      x.getCurrentPosition(success,failure,{timeout: 30000, enableHighAccuracy: true, maximumAge: 75000});
       
       
       
@@ -296,17 +295,15 @@ export class PulpitComponent implements OnInit {
     
     // this.Notes.push(objTmp);
     // this.maxId++;
-    console.log("notes: ",this.Notes);
+    // console.log("notes: ",this.Notes);
     this.Notes = [];
     this.updateNotes();
   }
   saveToDb(max){
-    console.log("to jest moj max: ",this.maxId);
     var tmp ={
       noteid:"note"+max,
       notetext:""
     }
-    console.log("to moj obiekt:",tmp)
 
     this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+tmp.noteid).update(tmp);
   }

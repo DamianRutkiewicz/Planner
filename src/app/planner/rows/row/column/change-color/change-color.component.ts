@@ -44,4 +44,9 @@ export class ChangeColorComponent implements OnInit {
   	this.rowservice.changeModalColor(value,this.timelineid);
   }
 
+  onDelateTimeline(){
+    console.log("to jego id : ",this.timelineid);
+    this.rowservice.delateTimeline(this.timelineid);
+  }
+
 }

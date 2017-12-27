@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ViewRef } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { RouterModule , Routes} from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -25,6 +25,7 @@ import { AuthService } from './connect-db.service';
 import { RowService } from './planner/rows/row.service';
 import { RowComponent } from './planner/rows/row/row.component';
 import { AuthGuard } from './auth.guard';
+import { FirebaseService } from './firebase.service';
 
 import { ContextMenuModule } from '../../node_modules/ngx-contextmenu';
 import { TimelineComponent } from './planner/rows/timeline/timeline.component';
@@ -128,7 +129,7 @@ const appRoutes:Routes=[
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [AuthService, RowService,AuthGuard],
+  providers: [AuthService, RowService,AuthGuard, FirebaseService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

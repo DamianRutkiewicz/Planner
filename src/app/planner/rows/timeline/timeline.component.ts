@@ -16,7 +16,7 @@ import { ChangeColorComponent } from '../row/column/change-color/change-color.co
 export class TimelineComponent implements OnInit {
 
   left:number; //to jest odleglosc od lewej krawedzi kolumny
-  public color:string="#1EE850"; //kolor timelineu
+  color:string="#1EE850"; //kolor timelineu
   // start:number=40;//
   // end:number = 220;
   widthTimeline:number;
@@ -25,24 +25,40 @@ export class TimelineComponent implements OnInit {
   endMouseDown:number;
   whichBox:number;
   private id;
+  hour:string;
+  tmpWidth:number;
+  indexHour;
 
   colorModalShowed:boolean=false;
 
   @ViewChild('changecolor', {read: ViewContainerRef}) changecolor: ViewContainerRef;
-  // @HostListener('childEvent') childEvent(){
-  // 	alert("zmieniono ten jebany color");
-  // }
 
 
   onMouseDownClick(event){
   	this.mouseDown = true;
   	this.startMouseDown = event.clientX;
   	console.log("kliknieto ",event);
+    this.tmpWidth = this.widthTimeline;
   }
 
   onMouseUpClick(event){
+    console.log("mouseUp !!!!!");
   	this.mouseDown = false;
+    if((this.tmpWidth!==this.widthTimeline)){
+      console.log("tmp : ",this.tmpWidth, " widthTimeline : ",this.widthTimeline);
+      this.rowservice.changeTimelineWidth(this.widthTimeline,this.hour,this.id);
+      this.tmpWidth = null;
+    }
+    
   }
+
+  // saveChanges(){
+  //   if((this.tmpWidth!==this.widthTimeline)){
+  //     console.log("tmp : ",this.tmpWidth, " widthTimeline : ",this.widthTimeline);
+  //     this.rowservice.changeTimelineWidth(this.widthTimeline,this.hour,this.id);
+  //     this.tmpWidth = null;
+  //   }
+  // }
 
   onMouseLeave(){
   	this.mouseDown = false;
@@ -82,9 +98,10 @@ export class TimelineComponent implements OnInit {
 
   // funkcja odpowiedzialna za przesuwanie lewej krawedzi
   onMouseMoveClickLeft(event:MouseEvent){
+
   	if(this.mouseDown){
   		this.endMouseDown = event.clientX;
-  		if((this.endMouseDown-this.startMouseDown)*1.3<-this.rowservice.oneTd/2){
+  		if(((this.endMouseDown-this.startMouseDown)*1.3<-this.rowservice.oneTd/2)&&(this.left>0)){
   			console.log("lewo");
   			this.widthTimeline += (this.rowservice.oneTd/2);
   			this.renderer.setStyle(this.el.nativeElement.querySelector('.timeline'),
@@ -93,6 +110,10 @@ export class TimelineComponent implements OnInit {
   			this.renderer.setStyle(this.el.nativeElement.querySelector('.timeline'),
   		 		'left',(this.left)+"px");
   			this.startMouseDown = this.endMouseDown;
+        this.indexHour = this.rowservice.headHours.indexOf(this.hour);
+        this.indexHour = this.indexHour -1;
+        this.hour = this.rowservice.headHours[this.indexHour];
+        console.log("taka godzina : ",this.hour);
 
   		}else if((this.endMouseDown-this.startMouseDown)*1.3>this.rowservice.oneTd/2){
   			console.log("prawo");
@@ -106,14 +127,22 @@ export class TimelineComponent implements OnInit {
   			this.renderer.setStyle(this.el.nativeElement.querySelector('.timeline'),
   		 		'left',(this.left)+"px");
   			this.startMouseDown = this.endMouseDown;
+        console.log("z takiej godziny ",this.hour);
+        this.indexHour = this.rowservice.headHours.indexOf(this.hour);
+        this.indexHour = this.indexHour + 1;
+        this.hour = this.rowservice.headHours[this.indexHour];
+        console.log("taka godzina : ",this.hour);
   		}
+
   	}
+    
   }
 
   constructor(private renderer: Renderer2,
    private el: ElementRef,
     private rowservice: RowService,
-     private resolver: ComponentFactoryResolver) {
+     private resolver: ComponentFactoryResolver,
+     private viewref: ViewContainerRef) {
   	// this.widthTimeline = this.end - this.start;
     this.widthTimeline = 180;
 
@@ -130,6 +159,13 @@ export class TimelineComponent implements OnInit {
         this.id = "timeline1";
         this.rowservice.TimelineIdentificators.push(this.id);
       }
+
+      this.rowservice.listenDelateEvent().subscribe((value)=>{
+      // this.iconModalShowed = false;
+      let cmp = this.changecolor.remove(); // to jest po to aby usunac modal
+
+    })
+      this.indexHour = this.rowservice.headHours.indexOf(this.hour);
   }
 
   ngOnInit() {
@@ -147,6 +183,8 @@ export class TimelineComponent implements OnInit {
           this.left = this.rowservice.getLeftSteps()[i];
       }
     }
+
+    console.log("to jest aktualna godzina dla tego timeline : ",this.hour);
   	
     // sprawdza czy dlugosc timelinea nie wyjdzie poza zakres
   	if((this.left+this.widthTimeline)<400){
@@ -178,9 +216,13 @@ export class TimelineComponent implements OnInit {
   		// console.log("TEEEEEEEEEEEEEEEEEEEE  zminilem kolor w obiekcie na ",this.color);
   	})
   	// this.renderer.setStyle(this.el.nativeElement.querySelector(".timeline"),'background-color',this.color);
-  	console.log("to jest left tego timelinea: ",this.left)
+  	this.rowservice.listenDelateTimeline2().subscribe((value)=>{
+      if(value==this.id){
+        this.destroy();
+      }
+    })
   }
-   private createColorModal(event){
+  createColorModal(event){
    	if(!this.colorModalShowed){
    		console.log("Tworzenie modalu wyboru koloru");
 	    const comp = this.resolver.resolveComponentFactory(<Type<ChangeColorComponent>>ChangeColorComponent);
@@ -197,6 +239,22 @@ export class TimelineComponent implements OnInit {
    		let cmp = this.changecolor.remove();
    	}
    	
+  }
+
+  setId(id){
+    this.id = id;
+    return this.id;
+  }
+
+  destroy(){
+    this.viewref.
+        element.nativeElement.
+        parentElement.
+        removeChild(this.viewref.element.nativeElement);
+  }
+
+  getId(){
+    return this.id;
   }
 
 }

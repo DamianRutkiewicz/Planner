@@ -1,6 +1,6 @@
 
 .pulpit-wrapper{
-	height: calc(100vh - 40px);
+	height: calc(100vh - 60px);
 	width: 100%;
 	position: relative;
 	transition: all 1s ease-in;
@@ -51,7 +51,7 @@
 	background-color:#6bca0c;
 }
 .brd-l{
-	border-left: 2px solid #B5B5B5;
+	border-left: 2px dashed #B5B5B5;
 	height: calc(100vh - 100px);
 	text-align:center;
 }
@@ -59,7 +59,9 @@
 .weather .prop{
 	text-align: left;
 	position: relative;
-	border-bottom: 1px solid gray;
+	border-bottom: 1px dashed gray;
+	padding: 15px 0;
+	margin-bottom: 25px;
 }
 #ico{
 	position: absolute;

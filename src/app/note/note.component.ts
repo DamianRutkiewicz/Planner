@@ -1,6 +1,5 @@
 import { Component, OnInit, Input , ElementRef, EventEmitter} from '@angular/core';
 import { noteClass } from '../noteClass';
-import { SaveFirebaseService } from '../save-firebase.service';
 import { RowService } from '../planner/rows/row.service';
 
 @Component({
@@ -24,7 +23,7 @@ export class NoteComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.note.noteText," note text");
+    // console.log(this.note.noteText," note text");
   }
 
   randRotate(){

@@ -1,6 +1,6 @@
 <tr class="one-row" id="tm{{ index }}">
 	<td class="task-name">
-		<input type="text" name="task-name-input" value="{{ row.name }}">
+		<input type="text" name="task-name-input" (focusout)="focusEvent()" [(ngModel)]="row" value="{{ row }}">
 		
 	</td>
 	<td app-column *ngFor="let i of liczbaKolumn;let a=index" [a]="a" [index]="index">

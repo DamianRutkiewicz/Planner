@@ -1,5 +1,7 @@
-import { Injectable, EventEmitter, Output} from '@angular/core';
+import { Injectable, EventEmitter, Output, Input} from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { AuthService } from '../../connect-db.service';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class RowService {
@@ -11,7 +13,15 @@ export class RowService {
   removeNoteSubject = new Subject<string>();
   saveNoteSubject = new Subject<string>();
 
-  @Output() childEvent: EventEmitter<string> = new EventEmitter<string>();
+  delateEventSubject = new Subject<any>();
+  delateEventSubject2 = new Subject<any>();
+
+  delateTimelineSubject = new Subject<any>();
+  delateTimelineSubject2 = new Subject<any>();
+  // pushEventToComponent = new Subject<string>();
+
+  // @Output() childEvent: EventEmitter<string> = new EventEmitter<string>();
+  myevent: EventEmitter<string> = new EventEmitter();
 
   private timeLineSteps:number=9;
   private Steps=[];
@@ -22,6 +32,10 @@ export class RowService {
   EventIdentificators:string[]=[];
   TimelineIdentificators:string[]=[];
   colors:string[];
+
+  headDays:Date[];
+  headHours:string[]=new Array();
+  
 
   clicked:number[];
   index:number;
@@ -79,29 +93,10 @@ export class RowService {
         end:18
       }
     ]
-  },
-  {
-    name:"zadanie 7",
-    time: [
-      {
-        start:17,
-        end:18
-      }
-    ]
-  },
-  {
-    name:"zadanie 8",
-    time: [
-      {
-        start:17,
-        end:18
-      }
-    ]
-  },
-  
+  }  
   ];
 
-  constructor() {
+  constructor(private af: AuthService) {
     this.timeLineSteps=9;
     this.oneTd = 400/this.timeLineSteps;
     let stepsTmp = this.timeLineSteps*2;
@@ -110,15 +105,65 @@ export class RowService {
       // this.leftSteps.push(this.oneTd*i);
       // console.log(this.oneTd," to jest oneTd a to i",i);
       this.leftSteps.push(i*(this.oneTd/2));
+      // this.assocHours.push()
     }
-    // console.log("left steps : ",this.leftSteps);
-    // console.log("tablica odleglosci od lewej strony :",this.leftSteps, " a to stepsTmp", stepsTmp);
+
+    this.rows = this.getRows();
+    this.Steps=this.getTimeLineSteps();
+
+    for (var i = 0; i < this.Steps.length*2; i++) {
+      if(i%2!=0){
+        this.headHours.push(String(this.Steps[(i-1)/2])+":30");
+        
+      }else{
+        this.headHours.push(String(this.Steps[i/2]));
+      }
+    };
+
+
+    // console.log(this.af.getRequests()+"jestem w row service ");
+    this.rows = this.af.getRequests();
+
   }
 
-  ngDoCheck(){
-    // for (var i = 0; i < this.timeLineSteps; i++) {
-    //   this.Steps.push(1);
-    // }
+  changeTimelineSteps(){
+    let stepsTmp = this.timeLineSteps*2;
+    // console.log("ile krokow : ",this.timeLineSteps)
+    this.leftSteps = [];
+    for (var i = 0; i < stepsTmp; i++) {
+      // this.leftSteps.push(this.oneTd*i);
+      // console.log(this.oneTd," to jest oneTd a to i",i);
+      
+      this.leftSteps.push(i*(this.oneTd/2));
+    }
+    // console.log("zminilem timline oto jedna kolumna :",this.oneTd/2);
+    // console.log("left steps :",this.leftSteps)
+  }
+
+  listenDelateEvent():Observable<any>{
+    return this.delateEventSubject.asObservable();
+  }
+  listenDelateEvent2():Observable<any>{
+    return this.delateEventSubject2.asObservable();
+  }
+
+  delateEvent(value){
+    this.delateEventSubject.next(value);
+    this.af.removeEvent(value);
+    this.delateEventSubject2.next(value);
+  }
+
+  listenDelateTimeline():Observable<any>{
+    return this.delateEventSubject.asObservable();
+  }
+  listenDelateTimeline2():Observable<any>{
+    return this.delateEventSubject2.asObservable();
+  }
+
+  delateTimeline(value){
+    this.delateTimelineSubject.next(value);
+    this.af.removeTimeline(value);
+    this.delateEventSubject2.next(value); //ten subject chyba wysyla do eventa zeby go usunac z widoku
   }
 
   removeNote(data){
@@ -129,11 +174,18 @@ export class RowService {
     this.saveNoteSubject.next(tmp);
   }
 
+  changeTimelineWidth(width,hour,id){
+    console.log("row service ");
+    this.af.changeTimelineWidth(width,hour,id);
+  }
+
   changeModalColor(value,id){
+    this.af.changeColor(value, id);
     let tmp = value+" "+id;
     this.modalColorSubject.next(tmp);
   }
   changeModalIcon(value,id){
+    this.af.changeIcon(value, id);
     let tmp = value+" "+id;
     this.modalIconSubject.next(tmp);
   }
@@ -181,6 +233,7 @@ export class RowService {
 
   getLeftSteps(){
     return this.leftSteps;
+
   }
 
   setStartHour(start:string){
@@ -191,8 +244,10 @@ export class RowService {
   }
 
   setSteps(val:number){
-
-    this.timeLineSteps = val; 
+    this.timeLineSteps = val;
+    this.oneTd = 400/this.timeLineSteps;
+     
+    // console.log("this.oneTd: ",this.oneTd, "timelinesteps : ",this.timeLineSteps);
   }
   setRowIndex(index:number){
     this.index = index;
@@ -204,6 +259,11 @@ export class RowService {
   onUpdate(event){
     // console.log("odebrane od event emiterra w SERWISIE");
     this.modalSubject.next(event);
+  }
+
+  changeEventName(data, row){
+
+    this.af.changeEventName(data,row);
   }
 
 }

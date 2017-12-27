@@ -1,6 +1,8 @@
 <div class="timeline" [style.background]="color">
-	<div class="prev"(mousedown)="onMouseDownClick($event)" (mousemove)="onMouseMoveClickLeft($event)" (mouseup)="onMouseUpClick($event)" (mouseleave)="onMouseLeave()" (click)="createColorModal()"><-</div>
-	<div class="next" (mousedown)="onMouseDownClick($event)" (mousemove)="onMouseMoveClick($event)" (mouseup)="onMouseUpClick($event)" (mouseleave)="onMouseLeave()" (click)="createColorModal()">-></div>
+	<div class="prev"(mousedown)="onMouseDownClick($event)" (mousemove)="onMouseMoveClickLeft($event)" (mouseup)="onMouseUpClick($event)" (mouseleave)="onMouseLeave()" (click)="createColorModal($event)"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+</div>
+	<div class="next" (mousedown)="onMouseDownClick($event)" (mousemove)="onMouseMoveClick($event)" (mouseup)="onMouseUpClick($event)" (mouseleave)="onMouseLeave()" (click)="createColorModal($event)"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+</div>
 
 	<ng-template #changecolor></ng-template>
 </div>

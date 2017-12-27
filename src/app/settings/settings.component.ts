@@ -24,7 +24,6 @@ export class SettingsComponent implements OnInit {
   endHour:string;
 
   DatesStart:Date[]=[
-    new Date('1968-11-16T06:00:00'),
     new Date('1968-11-16T07:00:00'),
     new Date('1968-11-16T08:00:00'),
     new Date('1968-11-16T09:00:00'),
@@ -41,8 +40,6 @@ export class SettingsComponent implements OnInit {
     new Date('1968-11-16T20:00:00'),
     new Date('1968-11-16T21:00:00'),
     new Date('1968-11-16T22:00:00'),
-    new Date('1968-11-16T23:00:00'),
-    new Date('1968-11-16T24:00:00'),
 
   ]
 
@@ -75,6 +72,8 @@ export class SettingsComponent implements OnInit {
       this.rowService.setSteps(steps);
       this.rowService.setStartHour(this.startHour);
       this.rowService.setEndHour(this.endHour);
+
+      this.rowService.changeTimelineSteps();
     }
   }
   // &&(this.startHour!=='-')
