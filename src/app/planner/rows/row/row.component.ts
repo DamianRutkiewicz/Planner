@@ -64,7 +64,7 @@ export class RowComponent implements OnInit {
     
   }
 
-  private focusEvent(){
+  focusEvent(){
     console.log("to jest w inpucie", this.row, " o indexie : ",this.index);
     this.rowService.changeEventName(this.row,this.index);
   }

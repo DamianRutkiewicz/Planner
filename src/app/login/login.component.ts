@@ -60,10 +60,9 @@ export class LoginComponent implements OnInit {
   }
 
   onFailLogin(){
-    console.log("nie udalo sie kurwa");
+
   }
   onSuccessLogin(){
-    console.log("udalo sie kurwa");
     this.router.navigate(['/dashboard']);
   }
 
