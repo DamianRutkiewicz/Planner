@@ -178,4 +178,15 @@ i[class^=icon-chevron]{
 	p.ico{
 		right: 50% !important;
 	}
+	.pulpit-wrapper{
+		height: auto !important;
+	}
+	.brd-l{
+		border-left: none;
+	}
+}
+@media screen and (max-width: 1200px){
+	p.ico{
+		right: 20% !important;
+	}
 }

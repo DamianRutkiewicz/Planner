@@ -15,12 +15,6 @@ import { FirebaseService } from '../firebase.service';
 })
 export class LoginComponent implements OnInit {
 
-  // constructor(private router: Router, private elementRef: ElementRef, private af: AngularFireDatabase) { 
-  // 	const users$: FirebaseListObservable<any>=this.af.list('/users');
-
-  // 	users$.subscribe(console.log);
-  // }
-
   email: string;
   password:string;
   errorMessage:string;

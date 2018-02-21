@@ -40,12 +40,10 @@ export class ChangeColorComponent implements OnInit {
   }
 
   onChangeColor(value){
-  	console.log("Zmieniono na ",value);
   	this.rowservice.changeModalColor(value,this.timelineid);
   }
 
   onDelateTimeline(){
-    console.log("to jego id : ",this.timelineid);
     this.rowservice.delateTimeline(this.timelineid);
   }
 

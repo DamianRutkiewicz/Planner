@@ -23,19 +23,10 @@ export class RowComponent implements OnInit {
     id:"jakisid",
     posx:"200px"
   }
-  // oneTD:number;
-
-
-  // @ViewChild('timeline1', {read: ViewContainerRef}) timeline: ViewContainerRef;
-
 
   @Input() row;
   @Input() index;
   index1=1;
-  // @Input() index;
-  // @HostListener("click") rightClick(){
-  //   window.oncontextmenu = this.showCustomMenu();
-  // } 
 
   @HostListener('mouseenter') onMouseEnter(){
   	this.changeColor("#EB5A29");
@@ -65,17 +56,15 @@ export class RowComponent implements OnInit {
   }
 
   focusEvent(){
-    console.log("to jest w inpucie", this.row, " o indexie : ",this.index);
     this.rowService.changeEventName(this.row,this.index);
+
   }
   private onClickHideModal(event){
-    // console.log("hidden");
-    // this.hideModal();
     return false;
   }
   
   private hideModal(){
-    // this.renderer.setStyle(this.el.nativeElement.querySelector('.modal-ss'),'display','none');
+
   }
 
   private changeColor(color){

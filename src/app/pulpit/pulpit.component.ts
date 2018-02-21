@@ -28,18 +28,12 @@ export class PulpitComponent implements OnInit {
       this.bgColor=snapshot.bgColor;
       // this.Notes = snapshot.Notes;
     });
-    
-
-      
-      console.log("first");
 
       this.obObsNotes.subscribe((value)=>{
       // console.log("obiekt: ",value.);
       // this.noteInit(value.notetext,value.noteid);
         this.Notes = [];
         for (var key in value) {
-          console.log("wartosc: ",typeof(key));
-          console.log("zobaczymy : ",value[key])
           if(value[key]!==null){
             this.noteInit(value[key].notetext,value[key].noteid);
           }
@@ -47,7 +41,6 @@ export class PulpitComponent implements OnInit {
       }
 
       for (var key in value) {
-        console.log(key.substr(4));
         var tmp= Number(key.substr(4))
         if(tmp>this.maxId){
           this.maxId = tmp;
@@ -56,18 +49,9 @@ export class PulpitComponent implements OnInit {
       this.maxId++;
     })
     
-
-    // var ggg= {
-    //   noteid:"note7",
-    //   notetext:"taki sobie"
-    // }
-    // this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+"note7").update(ggg);
-    
   }
 
   removeNote(data:string):void{
-    console.log("to chce usunac : ",data);
-    // this.Notes = [];
     this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+data).remove();
     var index = this.Notes.filter(function(el){
       return el.noteid != data;
@@ -75,13 +59,6 @@ export class PulpitComponent implements OnInit {
     this.Notes = index;
   }
   saveNote(data){
-    // console.log("save note, ",data);
-    // let tmp = data.split(/(\s+)/).filter(function(e){return e.trim().length>0;});
-    // let tmp = data.split("|")
-      // if(this.id==tmp[1]){
-      //   this.icon = tmp[0];
-      // }
-
     var index = data.indexOf(" ");
     var id = data.substr(0,index);
     var text = data.substr(index+1);
@@ -89,27 +66,18 @@ export class PulpitComponent implements OnInit {
       noteid:id,
       notetext:text
     }
-    // this.Notes=[];
-    console.log("to jest id: ",id," a to jest text:",text);
     this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+tmpOb.noteid).update(tmpOb);
-    // console.log("tak to wyglada w pulpit component: ",tmp);
   }
 
   ngOnInit() {
 
     this.rowservice.removeNoteSubject.subscribe((data)=>{
       this.removeNote(data);
-      // console.log("wykrylem usuniecie : ",data);
-      // this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+data).remove();
     });
     this.rowservice.saveNoteSubject.subscribe((data)=>{
       this.saveNote(data);
-      // console.log("wykrylem usuniecie : ",data);
-      // this.db.object('/users/'+localStorage.getItem("uid")+"/Notes/"+data).remove();
+
     });
-
-
-    // console.log(this.firebase.getUser().Notes.note10.noteid+" to przyszlo z serwisu firebase");
   
     (function(){
       var x = navigator.geolocation;
@@ -127,7 +95,7 @@ export class PulpitComponent implements OnInit {
           $("#city").html(data.name);
           var txt = temp+"<sup>o</sup>C";
           var wind = data.wind.speed+"m/s ";
-          var icon = "<img src='/assets/images/"+data.weather[0].icon+".png'/>";
+          var icon = "<img src='assets/images/"+data.weather[0].icon+".png'/>";
           // $("#ico").html(data.weather[0].icon);
           var pressure = data.main.pressure+"hpa";
           $("#ico").html(icon);
@@ -241,8 +209,8 @@ export class PulpitComponent implements OnInit {
     var t = 2013;
     var n = 9;
     var r = [];
-    var i = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Gudzień"];
-    var s = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
+    var i = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var s = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var o = ["#16a085", "#1abc9c", "#c0392b", "#27ae60", "#FF6860", "#f39c12", "#f1c40f", "#e67e22", "#2ecc71", "#e74c3c", "#d35400", "#2c3e50"];
     var u = $("#calendar");
     var a = u.find("#calendar_header");
@@ -291,11 +259,6 @@ export class PulpitComponent implements OnInit {
   };
 
   newNote(){
-    console.log("new note");
-    
-    // this.Notes.push(objTmp);
-    // this.maxId++;
-    // console.log("notes: ",this.Notes);
     this.Notes = [];
     this.updateNotes();
   }
@@ -315,7 +278,6 @@ export class PulpitComponent implements OnInit {
 
   noteInit(text,id){
     if(this.Notes.length < 12){
-      // console.log("text: ",text," id:",id);
       this.Notes.push(new noteClass(text,id));
       
     }

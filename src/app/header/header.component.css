@@ -27,3 +27,8 @@
 .logout:hover{
 	background-color: #0CF;
 }
+@media screen and (max-width: 520px){
+	.logged{
+		display: none;
+	}
+}

@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
 
     }
     else 
-    this.message = "powtórzone hasło jest niepoprawne";
+    this.message = "The repeated password is incorrect";
   }
 
   goToLogin(event){

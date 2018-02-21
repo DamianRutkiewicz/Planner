@@ -49,10 +49,12 @@ export class AuthService {
 
   eventsList;
   rows;
+  helper:number;
 
 
   constructor(private firebase: FirebaseService,private firebaseAuth: AngularFireAuth, private router:Router, private af:AngularFireDatabase, private http:Http) {
     this.user = firebaseAuth.authState;
+    this.helper = 1;
 
     this.af.object('/users/'+localStorage.getItem("uid")+"/Requests").subscribe((data)=>{
       // console.log("lista : ",data);
@@ -105,7 +107,6 @@ export class AuthService {
       .auth
       .createUserWithEmailAndPassword(email, password)
       .then(value => {
-        console.log('Success!', value);
         this.userId=value.uid;
         this.email=value.email;
 
@@ -117,7 +118,6 @@ export class AuthService {
         this.router.navigate(['/login']);
       })
       .catch(err => {
-        console.log('Something went wrong:',err.message);
         this.returnError(err.message);
         return false;
       });    
@@ -135,30 +135,18 @@ export class AuthService {
         this.navColor = this.af.object('/users/'+this.userId+"/navColor", {preserveSnapshot: true});
 
         this.email=value.email;
-        // this.items.subscribe(snapshot => {
-        //   console.log("hey:",snapshot.key)
-        //   console.log("val",snapshot.val());
-        // })
+
         localStorage.setItem('uid',this.userId);
+   
 
         this.af.object('/users/'+localStorage.getItem("uid")).subscribe((data)=>{
-          this.tmp = data.Notes;
 
           this.firebase.setUser(data);
+          if((this.router.url == "/login?returnUrl=%2Fdashboard%2Fpulpit")||(this.router.url == "/login")||(this.router.url=="/login?returnUrl=%2Fdashboard%2Fsettings")||(this.router.url=="/login?returnUrl=%2Fdashboard%2Fplanner")){
+            this.navigate();
+          }
+
         });       
-
-        this.af.object('/users/'+localStorage.getItem("uid")+"/Requests/").subscribe((data)=>{
-          console.log("jestem w login connect db a to jest rows:",data);
-          this.rows = data;
-
-          this.router.navigate(['/dashboard']);
-        }); 
-
-        // const RowsPromise = new Promise((resolve, reject)=>{
-        //   console.log("promise 1");
-        // }).then(this.test())
-
-        // RowsPromise.then(this.test())
 
         
         return this.navColor.toPromise().then(snapshot => {
@@ -170,9 +158,6 @@ export class AuthService {
        
       })
       .catch(err => {
-        console.log('Something went wrong:',err.message);
-        // this.router.navigate(['/login']);
-        // this.errorMessage = err.message;
         this.returnError(err.message);
         return false;
       });
@@ -180,23 +165,32 @@ export class AuthService {
     
   }
 
+  navigate(){
+
+    this.helper = 0;
+    this.router.navigate(['/dashboard']);
+    
+    
+  }
 
   logout() {
     this.firebaseAuth
       .auth
       .signOut();
     this.isUserLoggedIn = false;
+    
     localStorage.clear();
+    this.helper = 1;
+    console.log("this.helper: ",this.helper);
   }
   getUser(){
   	return this.email;
   }
   
   getEventHour(id){
-    console.log("event id : ",id);
 
     this.af.object('/users/'+localStorage.getItem("uid")+"/Events/"+id).subscribe((data)=>{
-           console.log("conncect  : ",data.hour);
+           // console.log("conncect  : ",data.hour);
     });
   }
 
@@ -223,10 +217,10 @@ export class AuthService {
     }
     
     this.af.object('/users/'+localStorage.getItem("uid")+"/Events/"+tmp.id).update(tmp);
+    this.router.navigate(['/dashboard/planner']);
   }
 
   saveTimeline(posx,column, event,id,hour,width){
-    console.log("dane: ",posx," ",column," ",event, " ",id," ",hour, " ", width);
 
     var tmp = {
       id:id,
@@ -239,6 +233,7 @@ export class AuthService {
     }
 
     this.af.object('/users/'+localStorage.getItem("uid")+"/Timelines/"+tmp.id).update(tmp);
+    // this.router.navigate(['/dashboard/planner']);
   }
 
   changeIcon(value, id){
@@ -252,8 +247,8 @@ export class AuthService {
       row:tmp.row,
       icon:value
     }
-    console.log("biore object: ",this.changeOb);
     this.changeOb.update(output);
+    // this.router.navigate(['/dashboard/planner']);
   }
 
   changeColor(value,id){
@@ -267,25 +262,20 @@ export class AuthService {
       row:tmp.row,
       color:value
     }
-    console.log("biore object: ",this.changeOb);
     this.changeOb.update(output);
   }
 
   removeEvent(id){
-    console.log("Connect-db remove event() !!!",id);
     this.removeEv = this.af.object('/users/'+localStorage.getItem("uid")+"/Events/"+id);
     this.removeEv.remove();
   }
   removeTimeline(id){
-    console.log("Connect-db remove event() !!!",id);
     this.removeEv = this.af.object('/users/'+localStorage.getItem("uid")+"/Timelines/"+id);
     this.removeEv.remove();
   }
 
   changeTimelineWidth(value,hour, id){
     this.changeOb = this.af.object('/users/'+localStorage.getItem("uid")+"/Timelines/"+id);
-
-    // var tmp = this.firebase.getUser().Timelines[id];
     var output = {
       width:value,
       hour:hour
@@ -294,7 +284,18 @@ export class AuthService {
   }
   changeEventName(data, row){
     this.changeOb = this.af.object('/users/'+localStorage.getItem("uid")+"/Requests/"+row);
-
     this.changeOb.set(data);
+    // this.changeOb.update(data);
+    // this.router.navigate(['/dashboard/planner']);
   }
+
+  setRows(data){
+    // console.log("setRows : ",data);
+    this.rows = data;
+  }
+
+  // getRows(){
+  //   console.log("getrows wywolany : ",this.rows)
+  //   return this.rows;
+  // }
 }

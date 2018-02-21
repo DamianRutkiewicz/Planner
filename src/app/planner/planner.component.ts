@@ -36,7 +36,6 @@ export class PlannerComponent {
   @Output() update = new EventEmitter<any>();
 
   constructor(private elRef: ElementRef, private renderer: Renderer2, private rs: RowService, private af:AuthService) {
-    // this.Steps=this.rs.getTimeLineSteps();
     this.rs.headDays = [this.currentDay,this.nextDay,this.next2Day,this.next3Day,this.next4Day];
   }
 
@@ -47,9 +46,7 @@ export class PlannerComponent {
     for (var i = 0; i < daysArray.length; i++) {
       this.headDays[i] = daysArray[i];
     };
-    // this.tableWidth= ElementRef.
     this.rows = this.rs.getRows();
-    console.log("Moje rows !!!!!!",this.rows);
     this.Steps=this.rs.getTimeLineSteps();
 
     for (var i = 0; i < this.Steps.length*2; i++) {
@@ -62,30 +59,14 @@ export class PlannerComponent {
     };
 
     this.rs.headHours = this.specSteps;
-    // console.log("Inicjacja plannera : ",this.Steps.length);
-   //  this.nextDay.setDate(this.currentDay.getDate()+1);
-   //  this.next2Day.setDate(this.currentDay.getDate()+2);
-   //  this.next3Day.setDate(this.currentDay.getDate()+3);
-  	// this.next4Day.setDate(this.currentDay.getDate()+4);
-
 
     this.widthTd = 400/this.Steps.length;
 
-    // this.rs.modalShowed.subscribe((val)=>{
-    //   this.modal = val;
-    // })
   }
   ngAfterViewInit(){
-    // this.renderer.setElementStyle(this.elRef.nativeElement.querySelector(".timeline tr td"),'width','20%');
-    // this.setWidthTD();
+
   }
 
-  // ngOnChanges(){
-  //   this.rs.modalSubject.subscribe((val)=>{
-  //     this.modal=val;
-  //     console.log("on changes :",this.modal);
-  //   })
-  // }
 
   onRightClick(event: MouseEvent){
     // console.log("to jest modal i elref");
@@ -109,28 +90,20 @@ export class PlannerComponent {
   }
 
   optionAddTimeline(){
-     // this.update.emit({
-     //   option:"timeline"
-     // })
-     // console.log("wybrana opcja timeline");
+
      let pos ={
        option:'timeline',
        posX:this.clX,
        posY:this.clY
      }
-     // console.log("X: ",this.clX," Y:",this.clY);
-     // this.rs.setRowIndex()
      this.rs.onUpdate(pos);
-     // console.log("timeline odpalony");
   }
   optionAddEvent(){
-    console.log("to jest optionAdEvent !!!");
      let pos ={
        option:'event',
        posX:this.clX,
        posY:this.clY
      }
      this.rs.onUpdate(pos);
-     // console.log("event odpalony")
   }
 }

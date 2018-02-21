@@ -8,10 +8,4 @@ export class settClass{
 		this.backColor=bColor;
 		this.email = emaill;
 	}
-	
-	// setProperties(bColor:string, nColor:string,email:string){
-	// 	this.navColor=nColor;
-	// 	this.backColor=bColor;
-	// 	this.email = email;
-	// }
 }

@@ -15,11 +15,5 @@ export class AppComponent {
   prd;
 
   constructor(private af:AngularFireDatabase, private firebase: FirebaseService){
-  	// const users$: FirebaseListObservable<any>=this.af.list('/users');
-
-  	
-  	// this.tmp = this.firebase.getUserObject();
-  	// this.prd = this.firebase.getUserObject();
-  	// console.log("to jest tmp : ",this.prd);
   }
 }

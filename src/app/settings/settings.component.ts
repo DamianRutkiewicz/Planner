@@ -68,7 +68,6 @@ export class SettingsComponent implements OnInit {
     if((this.startHour!==undefined)&&(this.endHour!==undefined)){
       // console.log("roznica : ",this.startHour," end : ",this.endHour);
       var steps:number =this.rowService.calculateSteps(this.startHour,this.endHour);
-      console.log("steps: ",steps);
       this.rowService.setSteps(steps);
       this.rowService.setStartHour(this.startHour);
       this.rowService.setEndHour(this.endHour);
@@ -76,10 +75,5 @@ export class SettingsComponent implements OnInit {
       this.rowService.changeTimelineSteps();
     }
   }
-  // &&(this.startHour!=='-')
-  // &&(this.endHour!=='-')
-  // changeEnd(){
-  //   console.log("zmiana lol", this.endHour);
-  // }
 
 }

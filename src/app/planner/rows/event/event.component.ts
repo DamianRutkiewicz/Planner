@@ -29,19 +29,15 @@ export class EventComponent implements OnInit {
   @ViewChild('changeicon', {read: ViewContainerRef}) changeicon: ViewContainerRef;
 
   constructor(private renderer: Renderer2,private viewref: ViewContainerRef, private el: ElementRef, private rowService: RowService, private resolver: ComponentFactoryResolver) {
-    
-    console.log("to jest EventsIdentificators : ",this.rowService.EventIdentificators);
 
     if(this.rowService.EventIdentificators.length!==0){
       let tmp=this.rowService.EventIdentificators[this.rowService.EventIdentificators.length-1];
       tmp=tmp.substr(5);
-      console.log("teoretycznie ostatni z tej jebanej tablicy : ",this.rowService.EventIdentificators)
       let tmp2= Number(tmp);
       tmp2++;
       this.rowService.EventIdentificators.push("event"+String(tmp2));
       this.id = "event"+tmp2;
-      // console.log("takie Id mi wyrzuca : ",this.id);
-      console.log("tablica eventow : ",this.rowService.EventIdentificators)
+
     }
     else{
       this.id="event1";
@@ -59,9 +55,6 @@ export class EventComponent implements OnInit {
 
 
   ngOnInit() {
-
-    console.log("to jest ID dla tego eventu: ",this.id);
-    console.log("to jest hour dla tego eventu : ",this.hour);
 
     // dopasowuje left do tablicy z rowservice
     for (var i = 0; i < this.rowService.getLeftSteps().length; i++) {
@@ -97,8 +90,6 @@ export class EventComponent implements OnInit {
       }
     })
 
-    // console.log("to jest godzina ktorej szukam !!!!",this.hour);
-    // this.renderer.setStyle(this.el.nativeElement.querySelector(".timeline"),'background-color',this.color);
   }
 
   setId(id){
@@ -108,7 +99,7 @@ export class EventComponent implements OnInit {
 
   createIconModal(event){
      if(!this.iconModalShowed){
-       // console.log("Tworzenie modalu wyboru koloru");
+
       const comp = this.resolver.resolveComponentFactory(<Type<ChangeIconComponent>>ChangeIconComponent);
 
       let cmp= this.changeicon.createComponent(comp);

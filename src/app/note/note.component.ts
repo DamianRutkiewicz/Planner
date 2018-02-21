@@ -11,8 +11,6 @@ export class NoteComponent implements OnInit {
 
   @Input() note;
   str:string;
-  // @Output() removeClicked:EventEmitter<any>=new EventEmitter<any>();
-  // @Output() saveClicked:EventEmitter<any>=new EventEmitter<any>();
   rotate;
 
   noteid:string;
@@ -23,7 +21,6 @@ export class NoteComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.note.noteText," note text");
   }
 
   randRotate(){
@@ -39,15 +36,10 @@ export class NoteComponent implements OnInit {
   removeNote(){
 
     this.rowservice.removeNote(this.note.noteid);
-    // this.noteid = this.note.noteid;
-    // console.log("dla tej notatki jej id: ",this.noteid);
 
-    // console.log("to chce wyslac",this.note.noteid)
-    // this.removeClicked.emit("this.note.noteid");
   }
   saveNote(){
     this.rowservice.saveNote(this.note.noteid,this.note.notetext);
-    // this.saveClicked.emit(true);
   }
 
 }

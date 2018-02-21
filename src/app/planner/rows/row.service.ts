@@ -2,6 +2,7 @@ import { Injectable, EventEmitter, Output, Input} from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { AuthService } from '../../connect-db.service';
 import {Observable} from 'rxjs/Observable';
+import { FirebaseService } from './../../firebase.service';
 
 @Injectable()
 export class RowService {
@@ -18,9 +19,6 @@ export class RowService {
 
   delateTimelineSubject = new Subject<any>();
   delateTimelineSubject2 = new Subject<any>();
-  // pushEventToComponent = new Subject<string>();
-
-  // @Output() childEvent: EventEmitter<string> = new EventEmitter<string>();
   myevent: EventEmitter<string> = new EventEmitter();
 
   private timeLineSteps:number=9;
@@ -93,19 +91,25 @@ export class RowService {
         end:18
       }
     ]
-  }  
+  },
+  {
+    name:"zadanie 7",
+    time: [
+      {
+        start:17,
+        end:18
+      }
+    ]
+  }    
   ];
 
-  constructor(private af: AuthService) {
+  constructor(private af: AuthService, private fb: FirebaseService) {
     this.timeLineSteps=9;
     this.oneTd = 400/this.timeLineSteps;
     let stepsTmp = this.timeLineSteps*2;
 
     for (var i = 0; i < stepsTmp; i++) {
-      // this.leftSteps.push(this.oneTd*i);
-      // console.log(this.oneTd," to jest oneTd a to i",i);
       this.leftSteps.push(i*(this.oneTd/2));
-      // this.assocHours.push()
     }
 
     this.rows = this.getRows();
@@ -120,24 +124,16 @@ export class RowService {
       }
     };
 
-
-    // console.log(this.af.getRequests()+"jestem w row service ");
     this.rows = this.af.getRequests();
 
   }
 
   changeTimelineSteps(){
     let stepsTmp = this.timeLineSteps*2;
-    // console.log("ile krokow : ",this.timeLineSteps)
     this.leftSteps = [];
     for (var i = 0; i < stepsTmp; i++) {
-      // this.leftSteps.push(this.oneTd*i);
-      // console.log(this.oneTd," to jest oneTd a to i",i);
-      
       this.leftSteps.push(i*(this.oneTd/2));
     }
-    // console.log("zminilem timline oto jedna kolumna :",this.oneTd/2);
-    // console.log("left steps :",this.leftSteps)
   }
 
   listenDelateEvent():Observable<any>{
@@ -175,7 +171,6 @@ export class RowService {
   }
 
   changeTimelineWidth(width,hour,id){
-    console.log("row service ");
     this.af.changeTimelineWidth(width,hour,id);
   }
 
@@ -199,31 +194,28 @@ export class RowService {
   }
 
   calculateSteps(start:string, end:string){
-    // let between = (Date.parse(end)-Date.parse(start))/(60*60*1000);
     if(Number.parseInt(end)!=0){
       let roznica = Number.parseInt(end)-Number.parseInt(start);
-      // console.log("numerycznie: ",roznica);
       return roznica;
     }
     else{
       end = "24";
       let roznica = Number.parseInt(end)-Number.parseInt(start);
-      // console.log("numerycznie: ",roznica);
       return roznica;
     }
   }
 
   getRows(){
+    this.rows = this.fb.getRequests();
   	return this.rows;
+
   }
 
   getTimeLineSteps(){
     this.Steps=[];
     for (var i = 0; i < this.timeLineSteps; i++) {
       this.Steps.push(Number(this.startHour)+i);
-      // console.log("to jest start hour : ",this.startHour);
     }
-    // console.log("time line steps : ",this.timeLineSteps, " a tu szerokosc komorki: ",this.oneTd, " steps:",this.Steps);
     return this.Steps;
   }
 
@@ -247,7 +239,6 @@ export class RowService {
     this.timeLineSteps = val;
     this.oneTd = 400/this.timeLineSteps;
      
-    // console.log("this.oneTd: ",this.oneTd, "timelinesteps : ",this.timeLineSteps);
   }
   setRowIndex(index:number){
     this.index = index;
@@ -257,12 +248,11 @@ export class RowService {
   }
 
   onUpdate(event){
-    // console.log("odebrane od event emiterra w SERWISIE");
     this.modalSubject.next(event);
   }
 
   changeEventName(data, row){
-
+    this.rows[row]=data;
     this.af.changeEventName(data,row);
   }
 

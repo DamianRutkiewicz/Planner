@@ -2,17 +2,16 @@
 	<h1></h1>
 	<div>
 		<div id="login-wrapper" class="login-wrapper animated rollIn">
-			<h1>Logowanie</h1>
+			<h1>Login</h1>
 			<form>
 				<input type="text" name="email" placeholder="email" [(ngModel)]="email"><br>
 				<input type="password" name="password" placeholder="password" [(ngModel)]="password"><br>
-				<button type="submit" class="btn btn-info" (click)="login()" [disabled]="!email || !password">Zaloguj się</button>
+				<button type="submit" class="btn btn-info" (click)="login()" [disabled]="!email || !password">Sign in</button>
 			</form>
-			<a (click)="goToRegister($event)">Nie masz jeszcze konta ?</a>
+			<a (click)="goToRegister($event)">You dont have an account yet ?</a>
 		</div>
 	</div>
 	<div class="login-error">
-		<!-- Coś poszło nie tak -->
 		{{ errorMessage }}
 	</div>
 </div>

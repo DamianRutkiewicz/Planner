@@ -42,23 +42,13 @@ export class TimelineComponent implements OnInit {
   }
 
   onMouseUpClick(event){
-    console.log("mouseUp !!!!!");
   	this.mouseDown = false;
     if((this.tmpWidth!==this.widthTimeline)){
-      console.log("tmp : ",this.tmpWidth, " widthTimeline : ",this.widthTimeline);
       this.rowservice.changeTimelineWidth(this.widthTimeline,this.hour,this.id);
       this.tmpWidth = null;
     }
     
   }
-
-  // saveChanges(){
-  //   if((this.tmpWidth!==this.widthTimeline)){
-  //     console.log("tmp : ",this.tmpWidth, " widthTimeline : ",this.widthTimeline);
-  //     this.rowservice.changeTimelineWidth(this.widthTimeline,this.hour,this.id);
-  //     this.tmpWidth = null;
-  //   }
-  // }
 
   onMouseLeave(){
   	this.mouseDown = false;
@@ -68,31 +58,21 @@ export class TimelineComponent implements OnInit {
   onMouseMoveClick(event:MouseEvent){
 
   	if(this.mouseDown){
-  		// console.log(event.clientX);
-  		// console.log("onmouseMove");
-  		// this.end = event.clientX;
   		this.endMouseDown = event.clientX;
-  		// console.log("przesunieto: ",(this.endMouseDown-this.startMouseDown));
-  		 // console.log("end : ",this.end);
   		 if(((this.endMouseDown-this.startMouseDown)*1.3>this.rowservice.oneTd/2)
          &&(this.left+this.widthTimeline)<400){
   		 	this.widthTimeline += (this.rowservice.oneTd/2);
   		 	this.renderer.setStyle(this.el.nativeElement.querySelector('.timeline'),
   		 		'width',this.widthTimeline+"px");
   		 	this.startMouseDown = this.endMouseDown;
-  		 	
-  		 	// console.log("dlugosc: ",this.widthTimeline);
-  		 	// console.log("przesunieto o ",this.widthTimeline+this.rowservice.oneTd/2+"px ", "tyle bylo :",this.widthTimeline);
+
   		 }else if((this.endMouseDown-this.startMouseDown)<-this.rowservice.oneTd/2){
-  		 	// console.log("zmniejszam");
   		 	this.widthTimeline -= (this.rowservice.oneTd/2);
 
   		 	this.renderer.setStyle(this.el.nativeElement.querySelector('.timeline'),
   		 		'width',this.widthTimeline+"px");
   		 	this.startMouseDown = this.endMouseDown;
   		 }
-  		// console.log(this.widthTimeline+(event.clientX-this.startMouseDown)+"px");
-  		// this.widthTimeline+(this.endMouseDown-this.startMouseDown)
   	}
   }
 
@@ -113,7 +93,6 @@ export class TimelineComponent implements OnInit {
         this.indexHour = this.rowservice.headHours.indexOf(this.hour);
         this.indexHour = this.indexHour -1;
         this.hour = this.rowservice.headHours[this.indexHour];
-        console.log("taka godzina : ",this.hour);
 
   		}else if((this.endMouseDown-this.startMouseDown)*1.3>this.rowservice.oneTd/2){
   			console.log("prawo");
@@ -127,11 +106,9 @@ export class TimelineComponent implements OnInit {
   			this.renderer.setStyle(this.el.nativeElement.querySelector('.timeline'),
   		 		'left',(this.left)+"px");
   			this.startMouseDown = this.endMouseDown;
-        console.log("z takiej godziny ",this.hour);
         this.indexHour = this.rowservice.headHours.indexOf(this.hour);
         this.indexHour = this.indexHour + 1;
         this.hour = this.rowservice.headHours[this.indexHour];
-        console.log("taka godzina : ",this.hour);
   		}
 
   	}
@@ -143,7 +120,6 @@ export class TimelineComponent implements OnInit {
     private rowservice: RowService,
      private resolver: ComponentFactoryResolver,
      private viewref: ViewContainerRef) {
-  	// this.widthTimeline = this.end - this.start;
     this.widthTimeline = 180;
 
      if(this.rowservice.TimelineIdentificators.length!==0){
@@ -175,7 +151,6 @@ export class TimelineComponent implements OnInit {
       if(this.rowservice.getLeftSteps()[i]>this.left){
         this.whichBox = i-1;
         this.left = this.rowservice.getLeftSteps()[i-1]
-        // console.log("to jest whichbox: ",this.whichBox);
         break;
       }
       if(i==this.rowservice.getLeftSteps().length-1){
@@ -183,8 +158,6 @@ export class TimelineComponent implements OnInit {
           this.left = this.rowservice.getLeftSteps()[i];
       }
     }
-
-    console.log("to jest aktualna godzina dla tego timeline : ",this.hour);
   	
     // sprawdza czy dlugosc timelinea nie wyjdzie poza zakres
   	if((this.left+this.widthTimeline)<400){
@@ -209,13 +182,8 @@ export class TimelineComponent implements OnInit {
       if(this.id==tmp[1]){
         this.color = tmp[0];
       }
-      console.log("to jest id: ",this.id, "a to jest color:",this.color);
-  		// this.color = value;
-  		// console.log("Zmienilem kolor na ",this.color);
-  		//  this.renderer.setStyle(this.el.nativeElement.querySelector(".timeline"),'background-color',this.color);
-  		// console.log("TEEEEEEEEEEEEEEEEEEEE  zminilem kolor w obiekcie na ",this.color);
+
   	})
-  	// this.renderer.setStyle(this.el.nativeElement.querySelector(".timeline"),'background-color',this.color);
   	this.rowservice.listenDelateTimeline2().subscribe((value)=>{
       if(value==this.id){
         this.destroy();
@@ -224,14 +192,12 @@ export class TimelineComponent implements OnInit {
   }
   createColorModal(event){
    	if(!this.colorModalShowed){
-   		console.log("Tworzenie modalu wyboru koloru");
 	    const comp = this.resolver.resolveComponentFactory(<Type<ChangeColorComponent>>ChangeColorComponent);
 
 	    let cmp= this.changecolor.createComponent(comp);
 	    cmp.instance.left = 500;
 	    cmp.instance.top = 100;
       cmp.instance.timelineid = this.id;
-	    console.log("stworzylem nowy komponent");
 	    this.colorModalShowed = true;
    	}
    	else{

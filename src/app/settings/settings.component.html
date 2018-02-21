@@ -4,7 +4,7 @@
  	<div class="row">
 	 <div class="col-lg-4 col-lg-offset-2">
 	  <div class="sett-content"> 
-	 	color górnego menu: 
+	 	top header color: 
 	 	<ul class="colors" id="colorList" >
 	 		<li *ngFor="let color of navColors" [style.background]="color" (click)="changeColor($event)"></li>
 	 	</ul>
@@ -12,7 +12,7 @@
 	 </div>
 	 <div class="col-lg-4">
 	  <div class="sett-content"> 
-	 	color tła: 
+	 	background color: 
 	 	<ul class="colors">
 	 		<li *ngFor="let color of backColors" [style.background]="color" (click)="changeBg($event)"></li>
 	 		
@@ -23,14 +23,14 @@
 	<div class="row">
 		<div class="col-lg-4 col-lg-offset-2">
 			<div class="sett-content">
-				Godziny pracy:
+				Work hours:
 				<div class="work-hours">
 					Start:
 					<select id="work-hours-start" (change)="change()" [(ngModel)]="startHour">
 						<!-- <option>-</option> -->
 						<option *ngFor="let date of DatesStart">{{ date | date:'H'}}</option>
 					</select>
-					Koniec:
+					End:
 					<select id="work-hours-end" (change)="change()" [(ngModel)]="endHour">
 						<!-- <option>-</option> -->
 						<option *ngFor="let date of DatesEnd">{{ date | date:'H'}}</option>
